@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Col, Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+import { Col, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+ import Button from "@material-ui/core/Button";
+
 import Api from "../../Services/Api";
 
 export default class CandidatInscription extends Component {
@@ -38,23 +40,19 @@ export default class CandidatInscription extends Component {
 
 	render() {
 		return (
-			<div>
-				<h3>Trouvez tous les jobs qu'il vous faut en créant un compte !</h3>
+			<div
+				style={{
+					backgroundColor: "whitesmoke",
+					width: "80%",
+					margin: "auto",
+					padding: " 4rem"
+				}}
+			>
+				<h4 style={{ textAlign: "center" }}>
+					Trouvez tous les jobs qu'il vous faut en créant un compte !
+				</h4>
 
-				<Form>
-					<FormGroup row>
-						<Label sm={2}>Email</Label>
-						<Col sm={8}>
-							<Input
-								onChange={this.handleInputChange}
-								type="email"
-								value={this.state.email}
-								name="email"
-								placeholder="Email"
-							/>
-						</Col>
-					</FormGroup>
-
+				<Form style={{ backgroundColor: "" }}>
 					<FormGroup row>
 						<Label sm={2}>Nom</Label>
 						<Col sm={8}>
@@ -106,6 +104,19 @@ export default class CandidatInscription extends Component {
 						</Col>
 					</FormGroup>
 
+					<FormGroup row style={{}}>
+						<Label sm={2}>Email</Label>
+						<Col sm={8}>
+							<Input
+								onChange={this.handleInputChange}
+								type="email"
+								value={this.state.email}
+								name="email"
+								placeholder="Email"
+							/>
+						</Col>
+					</FormGroup>
+
 					<FormGroup row>
 						<Label sm={2}>Mot de passe</Label>
 						<Col sm={8}>
@@ -122,6 +133,9 @@ export default class CandidatInscription extends Component {
 					<FormGroup check row>
 						<Col sm={{ size: 8, offset: 4 }}>
 							<Button
+								variant="contained"
+								color="primary"
+								width="30%"
 								type="submit"
 								onClick={this.registerCandidat}
 								disabled={this.state.loading}
