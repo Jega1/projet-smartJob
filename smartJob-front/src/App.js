@@ -1,6 +1,7 @@
 import React from "react";
 import "./static/css/style.css";
 import Nav from "./Components/Nav";
+import NavBar from "./Components/NavBar";
 
 import Home from "./Screens/Home";
 
