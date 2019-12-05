@@ -28,6 +28,10 @@ var enterpriseSchema = new Schema({
 		type: String,
 		required: true
 	},
+	date: {
+		type: Date,
+		default: new Date()
+	},
 	salt: String
 });
 

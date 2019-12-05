@@ -30,7 +30,7 @@ var candidatSchema = new Schema({
 	},
 	createdOn: {
 		type: Date,
-		default: Date.now
+		default: new Date()
 	},
 	salt: String
 });

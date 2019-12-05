@@ -16,4 +16,13 @@ export default class Api {
 	registerAnnounce(announce) {
 		return axios.post(this.url + "/announce/registerAnnounce", announce);
 	}
+
+	///// Logins /////
+
+	candidatLogin(email, password) {
+		return axios.post(this.url + "/candidat/candidatLogin", {
+			email: email,
+			password: password
+		});
+	}
 }
