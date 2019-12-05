@@ -28,11 +28,4 @@ router.post("/registerCandidat", (req, res, next) => {
 	});
 });
 
-
-
-// success: false, // on renvoie un objet json au front pour dire que il y a un pb
-// 	message: "Impossible de crééer un compte avec les infos fournies."
-
-
-
 module.exports = router;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./static/css/style.css";
 import Nav from "./Components/Nav";
-import NavBar from "./Components/NavBar";
+//import NavBar from "./Components/NavBar";
 
 import Home from "./Screens/Home";
 
@@ -11,6 +11,7 @@ import EnterpriseRegister from "./Screens/Enterprise/EnterpriseRegister";
 import EnterpriseLogin from "./Screens/Enterprise/EnterpriseLogin";
 import CreateAnnounce from "./Screens/Enterprise/CreateAnnounce";
 import CandidatLogin from "./Screens/Candidature/CandidatLogin";
+import CandidatDashboard from "./Screens/Candidature/CandidatDashboard";
 
 function App() {
 	return (
@@ -35,6 +36,9 @@ function App() {
 					</Route>
 					<Route path="/EntrepriseLogin">
 						<EnterpriseLogin />
+					</Route>
+					<Route path="/CandidatDashboard">
+						<CandidatDashboard />
 					</Route>
 					<Route path="/">
 						<Home />

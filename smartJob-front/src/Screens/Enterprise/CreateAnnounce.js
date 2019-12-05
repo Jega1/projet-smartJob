@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Col, Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+
 import Api from "../../Services/Api";
 
 export default class CreateAnnounce extends Component {
@@ -9,6 +10,7 @@ export default class CreateAnnounce extends Component {
 
 		this.state = {
 			poste: null,
+			contrat: null,
 			ville: null,
 			discription: null,
 			date: new Date(),
@@ -39,10 +41,17 @@ export default class CreateAnnounce extends Component {
 
 	render() {
 		return (
-			<div>
-				<h3>Create a annonce</h3>
+			<div
+				style={{
+					backgroundColor: "whitesmoke",
+					width: "80%",
+					margin: "auto",
+					padding: " 4rem"
+				}}
+			>
+				<h4 style={{ textAlign: "center" }}>Create a annonce</h4>
 
-				<Form>
+				<Form style={{ backgroundColor: "" }}>
 					<FormGroup row>
 						<Label sm={2}>Poste</Label>
 						<Col sm={8}>
@@ -52,6 +61,18 @@ export default class CreateAnnounce extends Component {
 								value={this.state.poste}
 								name="poste"
 								placeholder="Poste"
+							/>
+						</Col>
+					</FormGroup>
+					<FormGroup row>
+						<Label sm={2}>Contrat</Label>
+						<Col sm={8}>
+							<Input
+								onChange={this.handleInputChange}
+								type="text"
+								value={this.state.contrat}
+								name="contrat"
+								placeholder="contrat"
 							/>
 						</Col>
 					</FormGroup>

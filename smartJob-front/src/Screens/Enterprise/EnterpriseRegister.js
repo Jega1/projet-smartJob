@@ -38,10 +38,17 @@ export default class EnterpriseRegister extends Component {
 
 	render() {
 		return (
-			<div>
-				<h3>Trouvez tous les candidature !</h3>
+			<div
+				style={{
+					backgroundColor: "whitesmoke",
+					width: "80%",
+					margin: "auto",
+					padding: " 4rem"
+				}}
+			>
+				<h3 style={{ textAlign: "center" }}>Trouvez tous les candidature !</h3>
 
-				<Form>
+				<Form style={{ backgroundColor: "" }}>
 					<FormGroup row>
 						<Label sm={2}>Nom</Label>
 						<Col sm={8}>

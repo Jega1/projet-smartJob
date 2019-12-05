@@ -9,15 +9,21 @@ import {
 	Input,
 	Button
 } from "reactstrap";
-import SearchBar  from '../../Components/SearchBar';
-
+import SearchBar from "../../Components/SearchBar";
 
 export default class CandidatLogin extends Component {
 	render() {
 		return (
-			<Container>
-				<SearchBar/>
-				<h2>Sign In</h2>
+			<Container
+				style={{
+					backgroundColor: "whitesmoke",
+					width: "80%",
+					margin: "auto",
+					padding: " 4rem"
+				}}
+			>
+				<SearchBar />
+				<h2 style={{ textAlign: "center" }}>Sign In</h2>
 				<Form className="form">
 					<Col>
 						<FormGroup>
@@ -41,7 +47,9 @@ export default class CandidatLogin extends Component {
 							/>
 						</FormGroup>
 					</Col>
-					<Button>Submit</Button>
+					<Button sm={{ size: 8, offset: 4 }}
+						
+					>Submit</Button>
 
 					<Link className="" to="/inscription">
 						Créer un compte

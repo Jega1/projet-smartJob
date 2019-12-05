@@ -7,6 +7,7 @@ var announceSchema = new Schema({
 		default: new Date()
 	},
 	ville: String,
+	contrat:String,
 	entrepriseId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Entreprise"
@@ -14,7 +15,8 @@ var announceSchema = new Schema({
 	posteId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Poste"
-	}
+	},
+	
 });
 
 var Announce = mongoose.model("Announce", announceSchema);

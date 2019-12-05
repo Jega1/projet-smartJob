@@ -8,22 +8,47 @@ import {
 	FormGroup,
 	Label,
 	Input,
-	Button
+	Button,
+	Alert
 } from "reactstrap";
 
 export default class EnterpriseLogin extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	state = {
+		email: null,
+		password: null
+	};
+
+	enterpriseLogin = () => {
+		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		let isValidEmail = re.test(this.state.email.toLowerCase());
+		if (!isValidEmail) {
+			Alert.alert("Email invalide");
+			return;
+		}
+	};
 	render() {
 		return (
-			<Container>
-				<h2>Sign In entreprise</h2>
-				<Form className="form">
+			<Container
+				style={{
+					backgroundColor: "whitesmoke",
+					width: "80%",
+					margin: "auto",
+					padding: " 4rem"
+				}}
+			>
+				<h2 style={{ textAlign: "center" }}>Sign In entreprise</h2>
+				<Form style={{ backgroundColor: "" }}>
 					<Col>
 						<FormGroup>
 							<Label>Email</Label>
 							<Input
 								type="email"
 								name="email"
-								id="exampleEmail"
+								value={this.state.email}
 								placeholder="myemail@email.com"
 							/>
 						</FormGroup>
@@ -34,12 +59,14 @@ export default class EnterpriseLogin extends Component {
 							<Input
 								type="password"
 								name="password"
-								id="examplePassword"
+								value={this.state.password}
 								placeholder="********"
 							/>
 						</FormGroup>
 					</Col>
-					<Button>Submit</Button>
+					<Button onClick={this.enterpriseLogin} disabled={this.state.loading}>
+						Submit
+					</Button>
 
 					<Link className="" to="/registerEntreprise">
 						Créer un compte enterprise

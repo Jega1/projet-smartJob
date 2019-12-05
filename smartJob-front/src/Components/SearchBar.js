@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+ import React, { Component } from "react";
 
-export default class SearchBar extends Component {
+ export default class SearchBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,6 +21,8 @@ export default class SearchBar extends Component {
 	// };
 	render() {
 		return (
+			
+
 			<div>
 				<input
 					onChange={this.handleChange.bind(this)}
