@@ -1,7 +1,9 @@
 import React from "react";
 import "./static/css/style.css";
+import "./static/css/footer.css";
+import "./static/css/parallax.css";
 import Nav from "./Components/Nav";
-//import NavBar from "./Components/NavBar";
+import NavBar from "./Components/NavBar";
 
 import Home from "./Screens/Home";
 
@@ -12,12 +14,14 @@ import EnterpriseLogin from "./Screens/Enterprise/EnterpriseLogin";
 import CreateAnnounce from "./Screens/Enterprise/CreateAnnounce";
 import CandidatLogin from "./Screens/Candidature/CandidatLogin";
 import CandidatDashboard from "./Screens/Candidature/CandidatDashboard";
+import EnterpriseDashboard from "./Screens/Enterprise/EnterpriseDashboard";
 
 function App() {
 	return (
 		<Router>
 			<div>
-				<Nav />
+				{/* <NavBar />
+				<Nav /> */}
 
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -39,6 +43,9 @@ function App() {
 					</Route>
 					<Route path="/CandidatDashboard">
 						<CandidatDashboard />
+					</Route>
+					<Route path="/EnterpriseDashboard">
+						<EnterpriseDashboard />
 					</Route>
 					<Route path="/">
 						<Home />

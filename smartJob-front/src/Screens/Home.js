@@ -2,7 +2,13 @@ import React from "react";
 //import CandidatLogin from './Candidature/CandidatLogin'
 import CandidatInscription from "./Candidature/CandidatInscription";
 import Footer from "../Components/Footer";
-import AllOffers from  "../Components/AllAnnounce"
+import AllOffers from "../Components/AllAnnounce";
+import Carousel from "../Components/Carousel";
+import MediaList from "../Components/MediaList";
+import ToastOne from "../Components/ToastOne";
+import TabsBlock from "../Components/TabsBlock";
+import Parallax from "../Components/Parallax";
+import Nav from "../Components/Nav";
 
 export default class Home extends React.Component {
 	// constructor(props){
@@ -13,10 +19,15 @@ export default class Home extends React.Component {
 		return (
 			<div className="Home">
 				<div>
+					<Nav/>
+					<Carousel />
+					<MediaList />
+					<Parallax/>
+					<ToastOne />
+					<TabsBlock/>
+					<Footer />
 					{/* <CandidatLogin /> */}
 					{/* <CandidatInscription /> */}
-				
-					<Footer />
 				</div>
 			</div>
 		);

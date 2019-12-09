@@ -1,7 +1,18 @@
 import React, { Component } from "react";
-import { Col, Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+import {
+	Col,
+	Button,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Alert,
+	Container
+} from "reactstrap";
+import Nav from "../../Components/Nav";
 
 import Api from "../../Services/Api";
+//import { Container } from "@material-ui/core";
 
 export default class CreateAnnounce extends Component {
 	constructor(props) {
@@ -41,83 +52,86 @@ export default class CreateAnnounce extends Component {
 
 	render() {
 		return (
-			<div
-				style={{
-					backgroundColor: "whitesmoke",
-					width: "80%",
-					margin: "auto",
-					padding: " 4rem"
-				}}
-			>
-				<h4 style={{ textAlign: "center" }}>Create a annonce</h4>
+			<div>
+				<Nav />
+				<Container
+					style={{
+						backgroundColor: "whitesmoke",
+						width: "80%",
+						margin: "auto",
+						padding: " 4rem"
+					}}
+				>
+					<h4 style={{ textAlign: "center" }}>Create a annonce</h4>
 
-				<Form style={{ backgroundColor: "" }}>
-					<FormGroup row>
-						<Label sm={2}>Poste</Label>
-						<Col sm={8}>
-							<Input
-								onChange={this.handleInputChange}
-								type="text"
-								value={this.state.poste}
-								name="poste"
-								placeholder="Poste"
-							/>
-						</Col>
-					</FormGroup>
-					<FormGroup row>
-						<Label sm={2}>Contrat</Label>
-						<Col sm={8}>
-							<Input
-								onChange={this.handleInputChange}
-								type="text"
-								value={this.state.contrat}
-								name="contrat"
-								placeholder="contrat"
-							/>
-						</Col>
-					</FormGroup>
+					<Form style={{ backgroundColor: "" }}>
+						<FormGroup row>
+							<Label sm={2}>Poste</Label>
+							<Col sm={8}>
+								<Input
+									onChange={this.handleInputChange}
+									type="text"
+									value={this.state.poste}
+									name="poste"
+									placeholder="Poste"
+								/>
+							</Col>
+						</FormGroup>
+						<FormGroup row>
+							<Label sm={2}>Contrat</Label>
+							<Col sm={8}>
+								<Input
+									onChange={this.handleInputChange}
+									type="text"
+									value={this.state.contrat}
+									name="contrat"
+									placeholder="contrat"
+								/>
+							</Col>
+						</FormGroup>
 
-					<FormGroup row>
-						<Label sm={2}>Ville</Label>
-						<Col sm={8}>
-							<Input
-								onChange={this.handleInputChange}
-								type="text"
-								value={this.state.ville}
-								name="ville"
-								placeholder="Ville"
-							/>
-						</Col>
-					</FormGroup>
+						<FormGroup row>
+							<Label sm={2}>Ville</Label>
+							<Col sm={8}>
+								<Input
+									onChange={this.handleInputChange}
+									type="text"
+									value={this.state.ville}
+									name="ville"
+									placeholder="Ville"
+								/>
+							</Col>
+						</FormGroup>
 
-					<FormGroup row>
-						<Label sm={2}>Discription</Label>
-						<Col sm={8}>
-							<Input
-								onChange={this.handleInputChange}
-								type="text"
-								value={this.state.description}
-								name="description"
-								placeholder="description"
-							/>
-						</Col>
-					</FormGroup>
+						<FormGroup row>
+							<Label sm={2}>Discription</Label>
+							<Col sm={8}>
+								<Input
+									onChange={this.handleInputChange}
+									type="text"
+									value={this.state.description}
+									name="description"
+									placeholder="description"
+								/>
+							</Col>
+						</FormGroup>
 
-					<FormGroup check row>
-						<Col sm={{ size: 8, offset: 4 }}>
-							<Button
-								type="submit"
-								onClick={this.registerAnnounce}
-								disabled={this.state.loading}
-							>
-								Submit
-							</Button>
-						</Col>
-					</FormGroup>
-					{this.state.message ? (
-						<Alert color="success">{this.state.message}</Alert>
-					) : null}
-				</Form>
+						<FormGroup check row>
+							<Col sm={{ size: 8, offset: 4 }}>
+								<Button
+									type="submit"
+									onClick={this.registerAnnounce}
+									disabled={this.state.loading}
+								>
+									Submit
+								</Button>
+							</Col>
+						</FormGroup>
+						{this.state.message ? (
+							<Alert color="success">{this.state.message}</Alert>
+						) : null}
+					</Form>
+				</Container>
 			</div>
 		);
 	}

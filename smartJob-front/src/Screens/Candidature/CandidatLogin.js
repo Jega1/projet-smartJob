@@ -22,6 +22,17 @@ export default class CandidatLogin extends Component {
 		password: null
 	};
 
+	componentDidMount() {
+		// on vérifie le token
+
+		let token = localStorage.getItem("tokenCandidat");
+		if (token) {
+			// si le token existe dans le localstorage
+			// TODO vérifier avec la bdd
+			window.location = "/candidatDashboard";
+		}
+	}
+
 	handleInputChange = event => {
 		this.setState({ [event.target.name]: event.target.value });
 	};
@@ -36,9 +47,10 @@ export default class CandidatLogin extends Component {
 
 		this.api.candidatLogin(this.state.email, this.state.password).then(res => {
 			console.log(res.data);
-			if (res.data.success == true) {
+			if (res.data.success === true) {
 				localStorage.setItem("candidat", JSON.stringify(res.data.candidat));
 				localStorage.setItem("tokenCandidat", res.data.tokenCandidat);
+				window.location = "/CandidatDashboard";
 			} else {
 				alert(res.data.message);
 			}

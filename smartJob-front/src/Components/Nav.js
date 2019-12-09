@@ -30,8 +30,8 @@ export default class Nav extends Component {
 								</Link>
 							</li>
 							<li className="menu__list-item">
-								<Link className="menu__link" to="/about">
-									About
+								<Link className="menu__link" to="/EntrepriseLogin">
+									Accès recruter
 								</Link>
 							</li>
 
@@ -57,6 +57,9 @@ export default class Nav extends Component {
 										</Link>
 										<Link to="/CandidatDashboard">
 											<DropdownItem>Candidature dashboard</DropdownItem>
+										</Link>
+										<Link to="/login">
+											<DropdownItem>login</DropdownItem>
 										</Link>
 									</DropdownMenu>
 								</Dropdown>

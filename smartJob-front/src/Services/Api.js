@@ -25,4 +25,11 @@ export default class Api {
 			password: password
 		});
 	}
+
+	enterpriseLogin(email, password) {
+		return axios.post(this.url + "/enterprise/enterpriseLogin", {
+			email: email,
+			password: password
+		});
+	}
 }

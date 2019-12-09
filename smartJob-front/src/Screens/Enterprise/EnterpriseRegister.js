@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Col, Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+import { Col, Button, Form, FormGroup, Label, Input, Alert , Container} from "reactstrap";
+import Nav from "../../Components/Nav";
 import Api from "../../Services/Api";
 
 export default class EnterpriseRegister extends Component {
@@ -33,12 +34,15 @@ export default class EnterpriseRegister extends Component {
 		this.api.registerEnterprise(this.state).then(res => {
 			console.log(res.data);
 			this.setState({ loading: false, message: res.data.message });
+			// window.location = "/EnterpriseLogin";
 		});
 	};
 
 	render() {
 		return (
-			<div
+			<div>
+				<Nav/>
+			<Container
 				style={{
 					backgroundColor: "whitesmoke",
 					width: "80%",
@@ -125,6 +129,7 @@ export default class EnterpriseRegister extends Component {
 						<Alert color="success">{this.state.message}</Alert>
 					) : null}
 				</Form>
+			</Container>
 			</div>
 		);
 	}

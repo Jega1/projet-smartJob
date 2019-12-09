@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-//import { Col, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {
 	Container,
 	Col,
@@ -11,15 +10,34 @@ import {
 	Button,
 	Alert
 } from "reactstrap";
+import Nav from "../../Components/Nav";
+import NavBar from "../../Components/NavBar";
+import Api from "../../Services/Api";
 
 export default class EnterpriseLogin extends Component {
 	constructor(props) {
 		super(props);
+		this.api = new Api();
 	}
 
 	state = {
 		email: null,
 		password: null
+	};
+
+	componentDidMount() {
+		// on vérifie le token
+
+		let token = localStorage.getItem("tokenEnterprise");
+		if (token) {
+			// si le token existe dans le localstorage
+			// TODO vérifier avec la bdd
+			//window.location = "/EnterpriseDashboard";
+		}
+	}
+
+	handleInputChange = event => {
+		this.setState({ [event.target.name]: event.target.value });
 	};
 
 	enterpriseLogin = () => {
@@ -29,11 +47,30 @@ export default class EnterpriseLogin extends Component {
 			Alert.alert("Email invalide");
 			return;
 		}
+		this.api
+			.enterpriseLogin(this.state.email, this.state.password)
+			.then(res => {
+				console.log(res.data);
+				if (res.data.success === true) {
+					localStorage.setItem(
+						"enterprise",
+						JSON.stringify(res.data.enterprise)
+					);
+					localStorage.setItem("tokenEnterprise", res.data.tokenEnterprise);
+					window.location = "/EnterpriseDashboard";
+				} else {
+					alert(res.data.message);
+				}
+			});
 	};
 	render() {
 		return (
+			<div>
+				
+				<Nav />
 			<Container
-				style={{
+				
+					style={{
 					backgroundColor: "whitesmoke",
 					width: "80%",
 					margin: "auto",
@@ -49,6 +86,7 @@ export default class EnterpriseLogin extends Component {
 								type="email"
 								name="email"
 								value={this.state.email}
+								onChange={this.handleInputChange}
 								placeholder="myemail@email.com"
 							/>
 						</FormGroup>
@@ -60,6 +98,7 @@ export default class EnterpriseLogin extends Component {
 								type="password"
 								name="password"
 								value={this.state.password}
+								onChange={this.handleInputChange}
 								placeholder="********"
 							/>
 						</FormGroup>
@@ -73,6 +112,7 @@ export default class EnterpriseLogin extends Component {
 					</Link>
 				</Form>
 			</Container>
+			</div>
 		);
 	}
 }
