@@ -8,7 +8,7 @@ import MediaList from "../Components/MediaList";
 import ToastOne from "../Components/ToastOne";
 import TabsBlock from "../Components/TabsBlock";
 import Parallax from "../Components/Parallax";
-import Nav from "../Components/Nav";
+import Header from "../Components/Header";
 
 export default class Home extends React.Component {
 	// constructor(props){
@@ -19,7 +19,7 @@ export default class Home extends React.Component {
 		return (
 			<div className="Home">
 				<div>
-					<Nav/>
+					{/* <Header/> */}
 					<Carousel />
 					<MediaList />
 					<Parallax/>

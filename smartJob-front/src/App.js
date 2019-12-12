@@ -2,11 +2,13 @@ import React from "react";
 import "./static/css/style.css";
 import "./static/css/footer.css";
 import "./static/css/parallax.css";
+import "./static/css/Style1.css";
+//import "./static/css/nav-bar.css";
 import Nav from "./Components/Nav";
-import NavBar from "./Components/NavBar";
+import Navbar from "./Components/Nav-bar";
+import Header from "./Components/Header";
 
 import Home from "./Screens/Home";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CandidatInscription from "./Screens/Candidature/CandidatInscription";
 import EnterpriseRegister from "./Screens/Enterprise/EnterpriseRegister";
@@ -20,8 +22,9 @@ function App() {
 	return (
 		<Router>
 			<div>
-				{/* <NavBar />
-				<Nav /> */}
+				<Nav-bar />
+				<Nav />
+				{/* <Header/> */}
 
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
