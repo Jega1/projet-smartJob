@@ -92,7 +92,7 @@ export default class Nav extends Component {
 										</DropdownMenu>
 									</Dropdown>
 								) : (
-									<Dropdown isOpen={this.state.open} toggle={this.togglePanier}>
+									<Dropdown isOpen={this.state.open} toggle={this.toggle}>
 										<DropdownToggle caret>Connexion</DropdownToggle>
 										<DropdownMenu>
 											<Link to="/ClientLogin">
