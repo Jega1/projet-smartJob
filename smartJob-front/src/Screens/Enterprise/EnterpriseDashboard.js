@@ -39,6 +39,7 @@ export default class EnterpriseDashboard extends Component {
 			prix: null,
 			taille: "petite",
 			description: "",
+			file: "",
 			mesAnnonces: [],
 			editAnnounce: []
 		};
@@ -84,7 +85,15 @@ export default class EnterpriseDashboard extends Component {
 		this.setState({ categorie: event.target.value });
 	};
 
+	// onFile = event => {
+	// 	//console.log(event.target.files[0]);
+	// 	this.setState({
+	// 		file: event.target.files[0]
+	// 	});
+	// };
+
 	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen });
+	toggleModalModif = () => this.setState({ modalOpen: !this.state.modalOpen });
 
 	publierAnnonce = () => {
 		console.log(this.state);
@@ -101,7 +110,9 @@ export default class EnterpriseDashboard extends Component {
 				this.api.getAnnonces(this.state.enterprise).then(res => {
 					console.log(res.data);
 					if (res.data.success) {
-						this.setState({ mesAnnonces: res.data.mesAnnonces });
+						this.setState({
+							mesAnnonces: res.data.mesAnnonces
+						});
 					}
 				});
 			} else {
@@ -126,7 +137,105 @@ export default class EnterpriseDashboard extends Component {
 							<CardSubtitle>{annonce.categorie}</CardSubtitle>
 							<CardText>{annonce.prix}</CardText>
 
-							<Button>Modifier</Button>
+							<Button color="primary" onClick={this.toggleModalModif}>
+								Modifier
+							</Button>
+							{/* start modal modifier les annonce*/}
+							<Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
+								<ModalHeader toggle={this.toggleModal}>Modal title</ModalHeader>
+								<ModalBody>
+									<Form>
+										<FormGroup>
+											<Label>Nom du produit</Label>
+											<Input
+												type="text"
+												name="nom"
+												placeholder="Le nom du produit"
+												onChange={this.handleInputChange}
+												value={this.state.produit}
+											/>
+										</FormGroup>
+										<FormGroup>
+											<Label>Catégorie</Label>
+											<Input
+												type="select"
+												name="categorie"
+												onChange={this.handleSelectCategorie}
+												value={this.state.categorie}
+											>
+												<option value="mariage">Gateau mariage</option>
+												<option value="fete">Gateau fête</option>
+												<option value="anniversaire">
+													Gateau d'anniversaire
+												</option>
+											</Input>
+										</FormGroup>
+										<FormGroup>
+											<Label>Quantité</Label>
+											<Input
+												type="select"
+												name="quantite"
+												onChange={this.handleSelectQuantite}
+												value={this.state.quantite}
+											>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+											</Input>
+										</FormGroup>
+										<FormGroup>
+											<Label>Prix unitaire</Label>
+											<Input
+												type="number"
+												name="prix"
+												placeholder="Prix du produit"
+												value={this.state.prix}
+												onChange={this.handleInputChange}
+											/>
+										</FormGroup>
+										<FormGroup>
+											<Label>Taille</Label>
+											<Input type="select" name="taille">
+												<option>Petite</option>
+												<option>Moyenne</option>
+												<option>Grande</option>
+											</Input>
+										</FormGroup>
+
+										<FormGroup>
+											<Label>Description du gâteau</Label>
+											<Input
+												type="textarea"
+												name="description"
+												onChange={this.handleInputChange}
+												value={this.state.description}
+											/>
+										</FormGroup>
+
+										<FormGroup>
+											<Label>Image</Label>
+											<Input
+												type="file"
+												name="file"
+												onChange={this.handleInputChange}
+												//onChange={this.onFile}
+												value={this.state.file}
+											/>
+										</FormGroup>
+									</Form>
+								</ModalBody>
+								<ModalFooter>
+									<Button color="primary" onClick={this.publierAnnonce}>
+										Publier l'annonce
+									</Button>{" "}
+									<Button color="secondary" onClick={this.toggleModal}>
+										Cancel
+									</Button>
+								</ModalFooter>
+							</Modal>
+
 							<Button
 								color="danger"
 								onClick={() => this.deleteAnnonce(annonce._id)}
@@ -217,6 +326,17 @@ export default class EnterpriseDashboard extends Component {
 									name="description"
 									onChange={this.handleInputChange}
 									value={this.state.description}
+								/>
+							</FormGroup>
+
+							<FormGroup>
+								<Label>Image</Label>
+								<Input
+									type="file"
+									name="file"
+									onChange={this.handleInputChange}
+									//onChange={this.onFile}
+									value={this.state.file}
 								/>
 							</FormGroup>
 						</Form>

@@ -8,6 +8,7 @@ var annonceSchema = new Schema({
 	quantite: String,
 	taille: String,
 	description: String,
+	file: String,
 	enterprise: {
 		type: Schema.Types.ObjectId,
 		ref: "Enterprise"

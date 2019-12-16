@@ -1,8 +1,9 @@
 var express = require("express");
 var router = express.Router();
-
 var Enterprise = require("../model/enterprise").Enterprise;
 var Annonce = require("../model/annonce").Annonce;
+
+const multer = require("multer");
 const secret = "3ywb*XEGEC7)";
 const jwt = require("jwt-simple");
 
@@ -35,6 +36,20 @@ function checkUser(email, password) {
 		});
 	});
 }
+
+// SET STORAGE
+var storage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null, "uploads");
+	},
+	filename: function(req, file, cb) {
+		cb(null, Date.now() + "-" + file.originalname);
+	}
+});
+
+var upload = multer({ storage: storage });
+
+///////////////////////////////////
 
 // route pour créer l'utilisateur (1)
 router.post("/registerEnterprise", (req, res, next) => {
@@ -104,7 +119,7 @@ router.post("/enterpriseList", (req, res) => {
 	});
 });
 
-router.post("/publierAnnonce", (req, res) => {
+router.post("/publierAnnonce", upload.single("file"), (req, res) => {
 	let a = new Annonce();
 
 	a.nom = req.body.annonce.nom;
@@ -112,12 +127,13 @@ router.post("/publierAnnonce", (req, res) => {
 	a.prix = req.body.annonce.prix;
 	a.taille = req.body.annonce.taille;
 	a.description = req.body.annonce.description;
+	//a.file = req.file.path;
 	console.log(req.body);
 	a.enterprise = req.body.annonce.enterprise._id;
-	console.log(".////////");
+	console.log("fahhhfhfhfhfhfh");
 
 	a.save(function(err, annonce) {
-		console.log(err);
+		console.log(annonce);
 		if (err) {
 			res.json({
 				success: false,
@@ -134,9 +150,9 @@ router.post("/publierAnnonce", (req, res) => {
 });
 
 router.post("/getAnnonces", (req, res) => {
-	console.log("///////////////////////");
-	console.log(req.body.annonces);
-	console.log("///////////////////");
+	// console.log("///////////////////////");
+	// console.log(req.body.annonces);
+	// console.log("///////////////////");
 	Annonce.find({ enterprise: req.body.enterprise._id }, (err, annonces) => {
 		if (err) {
 			res.send(401);
@@ -150,7 +166,7 @@ router.post("/getAnnonces", (req, res) => {
 });
 
 router.delete("/deleteAnnonce/:id", (req, res) => {
-	Annonce.remove({ _id: req.params.id }, err => {
+	Annonce.deleteOne({ _id: req.params.id }, err => {
 		if (err) {
 			res.send(400);
 		} else {

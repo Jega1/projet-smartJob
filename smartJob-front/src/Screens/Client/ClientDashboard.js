@@ -68,6 +68,7 @@ export default class ClientDashboard extends Component {
 				<Col md="4">
 					<Card key={index}>
 						<CardBody>
+							
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.prix}$</CardSubtitle>
 						</CardBody>
