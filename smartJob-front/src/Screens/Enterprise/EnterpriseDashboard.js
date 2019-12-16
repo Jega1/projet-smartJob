@@ -33,6 +33,7 @@ export default class EnterpriseDashboard extends Component {
 		this.state = {
 			enterprise: {},
 			modalOpen: false,
+			modalOpenModif: false,
 			nom: null,
 			categorie: "mariage",
 			quantite: 1,
@@ -41,7 +42,8 @@ export default class EnterpriseDashboard extends Component {
 			description: "",
 			file: "",
 			mesAnnonces: [],
-			editAnnounce: []
+			modifAnnounce: [],
+			
 		};
 	}
 	componentDidMount() {
@@ -93,7 +95,8 @@ export default class EnterpriseDashboard extends Component {
 	// };
 
 	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen });
-	toggleModalModif = () => this.setState({ modalOpen: !this.state.modalOpen });
+	toggleModalModif = () =>
+		this.setState({ modalOpenModif: !this.state.modalOpenModif });
 
 	publierAnnonce = () => {
 		console.log(this.state);
@@ -141,8 +144,13 @@ export default class EnterpriseDashboard extends Component {
 								Modifier
 							</Button>
 							{/* start modal modifier les annonce*/}
-							<Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
-								<ModalHeader toggle={this.toggleModal}>Modal title</ModalHeader>
+							<Modal
+								isOpen={this.state.modalOpenModif}
+								toggle={this.toggleModalModif}
+							>
+								<ModalHeader toggle={this.toggleModalModif}>
+									Modifier l'annonce
+								</ModalHeader>
 								<ModalBody>
 									<Form>
 										<FormGroup>
@@ -259,7 +267,9 @@ export default class EnterpriseDashboard extends Component {
 				</Container>
 				{/* start modal form to publier le announce*/}
 				<Modal isOpen={this.state.modalOpen} toggle={this.toggleModal}>
-					<ModalHeader toggle={this.toggleModal}>Modal title</ModalHeader>
+					<ModalHeader toggle={this.toggleModal}>
+						Ajouter le produits
+					</ModalHeader>
 					<ModalBody>
 						<Form>
 							<FormGroup>

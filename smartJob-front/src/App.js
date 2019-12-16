@@ -1,8 +1,9 @@
 import React from "react";
 import "./static/css/style.css";
 import "./static/css/footer.css";
-import "./static/css/parallax.css";
+
 import "./static/css/Style1.css";
+import "./static/css/carousel.css";
 //import "./static/css/nav-bar.css";
 import Nav from "./Components/Nav";
 import Navbar from "./Components/Nav-bar";
