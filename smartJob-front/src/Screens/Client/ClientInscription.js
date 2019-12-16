@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 
 import Api from "../../Services/Api";
 
-export default class CandidatInscription extends Component {
+export default class ClientInscription extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { apiResponse: "" };
@@ -28,11 +28,11 @@ export default class CandidatInscription extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
-	registerCandidat = event => {
+	registerClient = event => {
 		event.preventDefault();
 		this.setState({ loading: true });
 
-		this.api.registerCandidat(this.state).then(res => {
+		this.api.registerClient(this.state).then(res => {
 			console.log(res.data);
 			this.setState({ loading: false, message: res.data.message });
 		});
@@ -137,7 +137,7 @@ export default class CandidatInscription extends Component {
 								color="primary"
 								width="30%"
 								type="submit"
-								onClick={this.registerCandidat}
+								onClick={this.registerClient}
 								disabled={this.state.loading}
 							>
 								Submit

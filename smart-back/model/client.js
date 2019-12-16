@@ -14,7 +14,7 @@ const genHash = function(password, salt) {
 	return hash.digest("hex");
 };
 
-var candidatSchema = new Schema({
+var clientSchema = new Schema({
 	nom: String,
 	prenom: String,
 	ville: String,
@@ -35,7 +35,7 @@ var candidatSchema = new Schema({
 	salt: String
 });
 
-candidatSchema.pre("save", function(next) {
+clientSchema.pre("save", function(next) {
 	if (this.isNew) {
 		this.salt = genSalt();
 		this.password = genHash(this.password, this.salt);
@@ -43,7 +43,7 @@ candidatSchema.pre("save", function(next) {
 	next();
 });
 
-candidatSchema.methods.validatePassword = function(password) {
+clientSchema.methods.validatePassword = function(password) {
 	if (this.password === genHash(password, this.salt)) {
 		return true;
 	} else {
@@ -51,5 +51,5 @@ candidatSchema.methods.validatePassword = function(password) {
 	}
 };
 
-var Candidat = mongoose.model("Candidat", candidatSchema);
-exports.Candidat = Candidat;
+var Client = mongoose.model("Client", clientSchema);
+exports.Client = Client;

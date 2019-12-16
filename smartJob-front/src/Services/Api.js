@@ -5,9 +5,8 @@ export default class Api {
 		this.url = "http://localhost:3001";
 	}
 
-	registerCandidat(candidat) {
-		// return axios.post(this.url + "/user/registerCandidat", candidat);
-		return axios.post(this.url + "/candidat/registerCandidat", candidat);
+	registerClient(client) {
+		return axios.post(this.url + "/client/registerClient", client);
 	}
 
 	registerEnterprise(enterprise) {
@@ -19,8 +18,8 @@ export default class Api {
 
 	///// Logins /////
 
-	candidatLogin(email, password) {
-		return axios.post(this.url + "/candidat/candidatLogin", {
+	clientLogin(email, password) {
+		return axios.post(this.url + "/client/clientLogin", {
 			email: email,
 			password: password
 		});
@@ -31,5 +30,32 @@ export default class Api {
 			email: email,
 			password: password
 		});
+	}
+	publierAnnonce(annonce) {
+		return axios.post(this.url + "/enterprise/publierAnnonce", {
+			annonce: annonce
+		});
+	}
+
+	getAnnonces(enterprise) {
+		return axios.post(this.url + "/enterprise/getAnnonces", {
+			enterprise: enterprise
+		});
+	}
+
+	deleteAnnonce(id) {
+		return axios.delete(this.url + "/enterprise/deleteAnnonce/" + id);
+	}
+
+	// pour le client
+	getAllAnnonces() {
+		return axios.get(this.url + "/client/getAllAnnonces");
+	}
+
+	commander(panier, user){
+		return axios.post(this.url + "/client/commander", {
+			panier: panier,
+			user: user
+		})
 	}
 }

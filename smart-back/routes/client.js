@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var Candidat = require("../model/candidat").Candidat;
+var Client = require("../model/client").Client;
+var Annonce = require("../model/annonce").Annonce;
+var Commande = require("../model/commande").Commande;
 const secret = "3ywb*XEGEC7)";
 const jwt = require("jwt-simple");
 
@@ -8,17 +10,13 @@ const jwt = require("jwt-simple");
 function checkUser(email, password) {
 	return new Promise((resolve, reject) => {
 		email = email.toLowerCase(); // tout le mail on convertit en minuscule
-		// on cherche un candidat avec le mail donné
-		// findOne c'est ppiur chercher UN UNIQUE candidat avec ce mail dans la bdd
-		Candidat.findOne({ email: email }, (err, candidat) => {
+		// on cherche un cleint avec le mail donné
+		// findOne c'est ppiur chercher UN UNIQUE client avec ce mail dans la bdd
+		Client.findOne({ email: email }, (err, client) => {
 			if (err) {
 				return reject(err, null);
 			}
-			if (
-				!candidat ||
-				candidat === false ||
-				!candidat.validatePassword(password)
-			) {
+			if (!client || client === false || !client.validatePassword(password)) {
 				return reject(
 					{
 						type: "wrongCredentials",
@@ -27,16 +25,16 @@ function checkUser(email, password) {
 					null
 				);
 			}
-			candidat.password = null; // pour la sécuirté
-			candidat.salt = null; // pour la sécurité
-			return resolve({ candidat: candidat });
+			client.password = null; // pour la sécuirté
+			client.salt = null; // pour la sécurité
+			return resolve({ client: client });
 		});
 	});
 }
 
 // route pour créer l'utilisateur
-router.post("/registerCandidat", (req, res, next) => {
-	let candi = new Candidat(); // on instancie la classe User pour stocker dans MongoDB
+router.post("/registerClient", (req, res, next) => {
+	let candi = new Client(); // on instancie la classe User pour stocker dans MongoDB
 	candi.nom = req.body.nom;
 	candi.prenom = req.body.prenom;
 	candi.poste = req.body.poste;
@@ -61,18 +59,18 @@ router.post("/registerCandidat", (req, res, next) => {
 });
 
 // router pour login
-router.post("/candidatLogin", (req, res) => {
+router.post("/clientLogin", (req, res) => {
 	if (req.body.email && req.body.password) {
 		checkUser(req.body.email, req.body.password)
 			.then(r => {
 				// on génère on token pour le stocker dans le front pour garder la session
 				// génération du token si le user ok.
-				let token = jwt.encode(r.candidat._id, secret);
+				let token = jwt.encode(r.client._id, secret);
 
 				res.json({
 					success: true,
-					candidat: r.candidat,
-					tokenCandidat: token
+					client: r.client,
+					tokenClient: token
 				});
 			})
 			.catch(error => {
@@ -87,6 +85,31 @@ router.post("/candidatLogin", (req, res) => {
 			message: "Rensegnez le mail et le mot de passe"
 		});
 	}
+});
+
+// lister all announce coté de client
+router.get("/getAllAnnonces", (req, res) => {
+	Annonce.find((error, annonces) => {
+		if (error) {
+			res.status(500).send(error);
+		} else {
+			res.json({
+				success: true,
+				allAnnonces: annonces
+			});
+		}
+	});
+});
+
+// router pour commander
+router.post("/commander", (req, res) => {
+	let c = new Commande();
+	c.acheteur = req.body.user._id;
+	c.panier = req.body.panier;
+	c.total = req.body.panier.reduce((acc, current) => acc + current.prix, 0);
+	c.save((err, commande) => {
+		res.json({ success: true, commande: commande });
+	});
 });
 
 module.exports = router;

@@ -1,0 +1,22 @@
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
+var annonceSchema = new Schema({
+	nom: String,
+	prix: Number,
+	categorie: String,
+	quantite: String,
+	taille: String,
+	description: String,
+	enterprise: {
+		type: Schema.Types.ObjectId,
+		ref: "Enterprise"
+	},
+	date: {
+		type: Date,
+		default: new Date()
+	}
+});
+
+var Annonce = mongoose.model("Annonce", annonceSchema);
+exports.Annonce = Annonce;

@@ -13,7 +13,8 @@ export default class login extends Component {
 	};
         render() {
                 return (
-                        <div>
+                        <container>
+				
                                 <Form className="form">
 					<Col>
 						<FormGroup>
@@ -39,11 +40,11 @@ export default class login extends Component {
 							/>
 						</FormGroup>
 					</Col>
-					<Button sm={{ size: 8, offset: 4 }} onClick={this.candidatLogin}>
+					<Button sm={{ size: 8, offset: 4 }} onClick={this.clientLogin}>
 						Submit
 					</Button>
                                         </Form>
-                        </div>
+                        </container>
                 )
         }
 }

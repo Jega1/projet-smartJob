@@ -7,6 +7,7 @@ const genSalt = function() {
 	return crypto.randomBytes(128).toString("base64");
 };
 
+
 const genHash = function(password, salt) {
 	let hash = crypto.createHash("sha512");
 	hash.update(salt);
@@ -51,5 +52,5 @@ enterpriseSchema.methods.validatePassword = function(password) {
 	}
 };
 
-var Enterprise = mongoose.model("Entreprise", enterpriseSchema);
+var Enterprise = mongoose.model("Enterprise", enterpriseSchema);
 exports.Enterprise = Enterprise;

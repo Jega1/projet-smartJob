@@ -12,7 +12,7 @@ import {
 import SearchBar from "../../Components/SearchBar";
 import Api from "../../Services/Api";
 
-export default class CandidatLogin extends Component {
+export default class ClientLogin extends Component {
 	constructor(props) {
 		super(props);
 		this.api = new Api();
@@ -25,11 +25,11 @@ export default class CandidatLogin extends Component {
 	componentDidMount() {
 		// on vérifie le token
 
-		let token = localStorage.getItem("tokenCandidat");
+		let token = localStorage.getItem("tokenClient");
 		if (token) {
 			// si le token existe dans le localstorage
 			// TODO vérifier avec la bdd
-			window.location = "/candidatDashboard";
+			window.location = "/clientDashboard";
 		}
 	}
 
@@ -37,7 +37,7 @@ export default class CandidatLogin extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
-	candidatLogin = () => {
+	clientLogin = () => {
 		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		let isValidEmail = re.test(this.state.email.toLowerCase());
 		if (!isValidEmail) {
@@ -45,12 +45,12 @@ export default class CandidatLogin extends Component {
 			return;
 		}
 
-		this.api.candidatLogin(this.state.email, this.state.password).then(res => {
+		this.api.clientLogin(this.state.email, this.state.password).then(res => {
 			console.log(res.data);
 			if (res.data.success === true) {
-				localStorage.setItem("candidat", JSON.stringify(res.data.candidat));
-				localStorage.setItem("tokenCandidat", res.data.tokenCandidat);
-				window.location = "/CandidatDashboard";
+				localStorage.setItem("client", JSON.stringify(res.data.client));
+				localStorage.setItem("tokenClient", res.data.tokenClient);
+				window.location = "/ClientDashboard";
 			} else {
 				alert(res.data.message);
 			}
@@ -94,7 +94,7 @@ export default class CandidatLogin extends Component {
 							/>
 						</FormGroup>
 					</Col>
-					<Button sm={{ size: 8, offset: 4 }} onClick={this.candidatLogin}>
+					<Button sm={{ size: 8, offset: 4 }} onClick={this.clientLogin}>
 						Submit
 					</Button>
 

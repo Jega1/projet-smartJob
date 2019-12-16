@@ -67,7 +67,6 @@ export default class EnterpriseLogin extends Component {
 		return (
 			<div>
 				
-				<Nav />
 			<Container
 				
 					style={{

@@ -4,18 +4,57 @@ import {
 	Dropdown,
 	DropdownToggle,
 	DropdownMenu,
-	DropdownItem
+	DropdownItem,
+	Button,
+	ListGroup,
+	ListGroupItem,
+	Badge
 } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 //import { Col, Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+import Api from "../Services/Api";
 
 export default class Nav extends Component {
+	constructor(props) {
+		super(props);
+		this.api = new Api();
+	}
 	state = {
-		open: false
+		open: false,
+		openDetails: false,
+		openPanier: false,
+		user: this.props.user,
+		panier: this.props.panier
 	};
 
 	toggle = () => {
 		this.setState({ open: !this.state.open });
 	};
+
+	toggleDetails = () => {
+		this.setState({ openDetails: !this.state.openDetails });
+	};
+
+	togglePanier = () => {
+		this.setState({
+			openPanier: !this.state.openPanier
+		});
+	};
+
+	commander = () => {
+		this.api.commander(this.state.panier, this.state.user).then(res => {
+			if (res.data.success) {
+				localStorage.removeItem("panier");
+				alert(res.data.message);
+			}
+		});
+	};
+
+	logout = () => {
+		localStorage.clear();
+		window.location = "/";
+	};
+
 	render() {
 		return (
 			<div>
@@ -29,11 +68,6 @@ export default class Nav extends Component {
 									Home
 								</Link>
 							</li>
-							<li className="menu__list-item">
-								<Link className="menu__link" to="/EntrepriseLogin">
-									Accès recruter
-								</Link>
-							</li>
 
 							<li className="menu__list-item">
 								<Link className="menu__link" to="/about">
@@ -42,86 +76,83 @@ export default class Nav extends Component {
 							</li>
 
 							<li className="menu__list-item">
-								<Dropdown isOpen={this.state.open} toggle={this.toggle}>
-									<DropdownToggle caret>Connexion</DropdownToggle>
-									<DropdownMenu>
-										<Link to="/CandidatLogin">
-											<DropdownItem>Candidature</DropdownItem>
-										</Link>
+								{this.state.user ? (
+									<Dropdown
+										isOpen={this.state.openDetails}
+										toggle={this.toggleDetails}
+									>
+										<DropdownToggle caret>
+											{this.state.user.email}
+										</DropdownToggle>
+										<DropdownMenu>
+											<DropdownItem>Mon compte</DropdownItem>
+											<DropdownItem onClick={this.logout}>
+												Se déconnecter
+											</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
+								) : (
+									<Dropdown isOpen={this.state.open} toggle={this.togglePanier}>
+										<DropdownToggle caret>Connexion</DropdownToggle>
+										<DropdownMenu>
+											<Link to="/ClientLogin">
+												<DropdownItem>Client</DropdownItem>
+											</Link>
 
-										<Link to="/registerAnnounce">
-											<DropdownItem>Announce</DropdownItem>
-										</Link>
-										<Link to="/EntrepriseLogin">
-											<DropdownItem>Entreprise</DropdownItem>
-										</Link>
-										<Link to="/CandidatDashboard">
-											<DropdownItem>Candidature dashboard</DropdownItem>
-										</Link>
-										<Link to="/login">
-											<DropdownItem>login</DropdownItem>
-										</Link>
-									</DropdownMenu>
-								</Dropdown>
+											<Link to="/EntrepriseLogin">
+												<DropdownItem>Entreprise</DropdownItem>
+											</Link>
+										</DropdownMenu>
+									</Dropdown>
+								)}
 							</li>
+							{this.state.user && this.state.panier ? (
+								<span>
+									<Button color="success" outline onClick={this.togglePanier}>
+										Panier{" "}
+										<Badge color="secondary">{this.state.panier.length}</Badge>
+									</Button>
+									<Modal
+										isOpen={this.state.openPanier}
+										toggle={this.togglePanier}
+									>
+										<ModalHeader toggle={this.togglePanier}>
+											Mon panier
+										</ModalHeader>
+										<ModalBody>
+											<ListGroup>
+												{this.state.panier.map((article, index) => {
+													return (
+														<ListGroupItem className="justify-content-between">
+															{article.nom} <Badge pill>{article.prix} $</Badge>
+														</ListGroupItem>
+													);
+												})}
+											</ListGroup>
+										</ModalBody>
+										<ModalFooter>
+											<h1>
+												Total:
+												{this.state.panier.reduce(
+													(acc, current) => acc + current.prix,
+													0
+												)}{" "}
+												$
+											</h1>
+											<Button color="primary" onClick={this.commander}>
+												Commander
+											</Button>{" "}
+											<Button color="secondary" onClick={this.togglePanier}>
+												Annuler
+											</Button>
+										</ModalFooter>
+									</Modal>
+								</span>
+							) : null}
 						</ul>
 					</div>
 				</nav>
 			</div>
-
-			// <nav
-			// 	class="navbar navbar-expand-lg navbar-light "
-			// 	style={{ backgroundColor: "rgb(72, 1, 475)", TextColor: "white" }}
-			// >
-			// 	<a class="navbar-brand" href="#">
-			// 		Smart Job
-			// 	</a>
-			// 	<button
-			// 		class="navbar-toggler"
-			// 		type="button"
-			// 		data-toggle="collapse"
-			// 		data-target="#navbarNavDropdown"
-			// 		aria-controls="navbarNavDropdown"
-			// 		aria-expanded="false"
-			// 		aria-label="Toggle navigation"
-			// 	>
-			// 		<span class="navbar-toggler-icon"></span>
-			// 	</button>
-
-			// 	<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			// 		<ul class="navbar-nav">
-			// 			<li class="nav-item active" style={{decoration: "none"}}>
-			// 				<Link className="nav-link" to="/">
-			// 					<span className="sr-only">(current)</span>
-			// 					Home
-			// 				</Link>
-			// 			</li>
-			// 		</ul>
-
-			// 		<ul>
-			// 			<li className="nav-item dropdown">
-			// 				<Dropdown isOpen={this.state.open} toggle={this.toggle}>
-			// 					<DropdownToggle caret>Connexion</DropdownToggle>
-			// 					<DropdownMenu>
-			// 						<Link to="/CandidatLogin">
-			// 							<DropdownItem>Candidature</DropdownItem>
-			// 						</Link>
-
-			// 						{/* <Link to="/registerEntreprise">
-			//  								<DropdownItem>Entreprise</DropdownItem>
-			// 							</Link> */}
-			// 						<Link to="/registerAnnounce">
-			// 							<DropdownItem>Announce</DropdownItem>
-			// 						</Link>
-			// 						<Link to="/EntrepriseLogin">
-			// 							<DropdownItem>Entreprise</DropdownItem>
-			// 						</Link>
-			// 					</DropdownMenu>
-			// 				</Dropdown>
-			// 			</li>
-			// 		</ul>
-			// 	</div>
-			//</nav>
 		);
 	}
 }

@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
+
 var Enterprise = require("../model/enterprise").Enterprise;
+var Annonce = require("../model/annonce").Annonce;
 const secret = "3ywb*XEGEC7)";
 const jwt = require("jwt-simple");
 
@@ -87,6 +89,77 @@ router.post("/enterpriseLogin", (req, res) => {
 			message: "Rensegnez le mail et le mot de passe"
 		});
 	}
+});
+
+// router pour list
+router.post("/enterpriseList", (req, res) => {
+	enterprise.find((error, enterprise) => {
+		if (error) {
+			console.log(error);
+			res.status(500).send(error);
+		} else {
+			console.log(enterprise);
+			res.status(200).send(enterprise);
+		}
+	});
+});
+
+router.post("/publierAnnonce", (req, res) => {
+	let a = new Annonce();
+
+	a.nom = req.body.annonce.nom;
+	a.categorie = req.body.annonce.categorie;
+	a.prix = req.body.annonce.prix;
+	a.taille = req.body.annonce.taille;
+	a.description = req.body.annonce.description;
+	console.log(req.body);
+	a.enterprise = req.body.annonce.enterprise._id;
+	console.log(".////////");
+
+	a.save(function(err, annonce) {
+		console.log(err);
+		if (err) {
+			res.json({
+				success: false,
+				message: "une erreur est survenue"
+			});
+		} else {
+			res.json({
+				success: true,
+				message: "Bravo, votre annonce a été publiée",
+				annonce: annonce
+			});
+		}
+	});
+});
+
+router.post("/getAnnonces", (req, res) => {
+	console.log("///////////////////////");
+	console.log(req.body.annonces);
+	console.log("///////////////////");
+	Annonce.find({ enterprise: req.body.enterprise._id }, (err, annonces) => {
+		if (err) {
+			res.send(401);
+		} else {
+			res.json({
+				success: true,
+				mesAnnonces: annonces
+			});
+		}
+	});
+});
+
+router.delete("/deleteAnnonce/:id", (req, res) => {
+	Annonce.remove({ _id: req.params.id }, err => {
+		if (err) {
+			res.send(400);
+		} else {
+			res.json({
+				success: true,
+				message: "L'annonce a été supprimée"
+			});
+		}
+	});
 });
 
 module.exports = router;
