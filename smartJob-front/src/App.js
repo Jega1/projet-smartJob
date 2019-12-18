@@ -1,10 +1,11 @@
 import React from "react";
 import "./static/css/style.css";
 import "./static/css/footer.css";
+import "./static/css/nav.css";
 
-import "./static/css/Style1.css";
+
 import "./static/css/carousel.css";
-//import "./static/css/nav-bar.css";
+
 import Nav from "./Components/Nav";
 import Navbar from "./Components/Nav-bar";
 import Header from "./Components/Header";
@@ -70,6 +71,9 @@ function App() {
 					</Route>
 					<Route path="/EnterpriseDashboard">
 						<EnterpriseDashboard />
+					</Route>
+					<Route path="/ModifProduit">
+						
 					</Route>
 					<Route path="/">
 						<Home />

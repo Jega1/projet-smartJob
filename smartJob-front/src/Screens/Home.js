@@ -4,6 +4,8 @@ import Footer from "../Components/Footer";
 import Carousel from "../Components/Carousel";
 import MediaList from "../Components/MediaList";
 import AllAnnounce from "../Components/AllAnnounce";
+import NavBar from "../Components/NavBar";
+
 
 
 export default class Home extends React.Component {
@@ -13,11 +15,14 @@ export default class Home extends React.Component {
 		return (
 			<div className="Home">
 				<div>
-					<Carousel />
-					<MediaList />
-						
-					<Footer />
+			
 
+					 <Carousel />
+					<MediaList />
+					
+					
+					<Footer />  
+		
 				</div>
 			</div>
 		);

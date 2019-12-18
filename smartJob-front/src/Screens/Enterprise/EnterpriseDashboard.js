@@ -40,10 +40,10 @@ export default class EnterpriseDashboard extends Component {
 			prix: null,
 			taille: "petite",
 			description: "",
-			file: "",
+			file: null,
 			mesAnnonces: [],
 			modifAnnounce: [],
-			
+			modifAnnounce: this.props.modifAnnounce
 		};
 	}
 	componentDidMount() {
@@ -54,6 +54,7 @@ export default class EnterpriseDashboard extends Component {
 			window.location = "/EnterpriseLogin";
 			return;
 		}
+
 
 		this.setState({ enterprise: JSON.parse(enterp) }, () => {
 			this.api.getAnnonces(this.state.enterprise).then(res => {
@@ -134,7 +135,7 @@ export default class EnterpriseDashboard extends Component {
 							width="100%"
 							src="/assets/318x180.svg"
 							alt="Card image cap"
-						/>
+						/> 
 						<CardBody>
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.categorie}</CardSubtitle>
@@ -236,9 +237,9 @@ export default class EnterpriseDashboard extends Component {
 								</ModalBody>
 								<ModalFooter>
 									<Button color="primary" onClick={this.publierAnnonce}>
-										Publier l'annonce
+										Update
 									</Button>{" "}
-									<Button color="secondary" onClick={this.toggleModal}>
+									<Button color="secondary" onClick={this.toggleModalModif}>
 										Cancel
 									</Button>
 								</ModalFooter>

@@ -8,10 +8,16 @@ import {
 	Button,
 	ListGroup,
 	ListGroupItem,
-	Badge
+	Badge,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	Container,
+	Row,
+	Col
 } from "reactstrap";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-//import { Col, Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
+
 import Api from "../Services/Api";
 
 export default class Nav extends Component {
@@ -57,33 +63,52 @@ export default class Nav extends Component {
 
 	render() {
 		return (
-			<div>
-				<nav className="menu">
-					<h1 className="menu__logo">Smart job</h1>
+			<div className="menu-div">
+				<nav id="menu" className="navbar navbar-expand-lg navbar-dark ">
+					<Link to="/" className="navbar-brand">
+						<i class="fas fa-home">LOGO</i>
+					</Link>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarNavDropdown"
+						aria-controls="navbarNavDropdown"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
 
-					<div className="menu__right">
-						<ul className="menu__list">
-							<li className="menu__list-item">
-								<Link className="menu__link menu__link--active" to="/">
+					<div class="collapse navbar-collapse" id="navbarNavDropdown">
+						<ul
+							class="collapse navbar-collapse flex-grow-1 text-right"
+							id="myNavbar"
+							class="navbar-nav ml-auto flex-nowrap"
+						>
+							<li class="nav-item active">
+								<Link className="nav-link" to="/">
+									<i class="fas fa-home"></i>
 									Home
 								</Link>
 							</li>
-
-							<li className="menu__list-item">
-								<Link className="menu__link" to="/about">
+							<li class="nav-item">
+								<Link className="nav-link" to="/about">
 									contact
 								</Link>
-							</li>
-
-							<li className="menu__list-item">
+							</li>{" "}
+							<li class="nav-item">
+								<Link className="nav-link" to="/about">
+									contact
+								</Link>
+							</li>{" "}
+							<li class="nav-item">
 								{this.state.user ? (
 									<Dropdown
 										isOpen={this.state.openDetails}
 										toggle={this.toggleDetails}
 									>
-										<DropdownToggle caret>
-											{this.state.user.email}
-										</DropdownToggle>
+										<DropdownToggle caret>{this.state.user.nom}</DropdownToggle>
 										<DropdownMenu>
 											<DropdownItem>Mon compte</DropdownItem>
 											<DropdownItem onClick={this.logout}>
