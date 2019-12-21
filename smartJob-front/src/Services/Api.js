@@ -47,6 +47,13 @@ export default class Api {
 		return axios.post(this.url + "/enterprise/uploadFile", formData, config);
 	}
 
+	updateAnnonce(annonce, urlImage) {
+		return axios.post(this.url + "/enterprise/updateAnnonce", {
+			annonce: annonce,
+			urlImage: urlImage
+		});
+	}
+
 	getAnnonces(enterprise) {
 		return axios.post(this.url + "/enterprise/getAnnonces", {
 			enterprise: enterprise

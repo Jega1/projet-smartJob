@@ -194,6 +194,34 @@ router.post("/publierAnnonce", (req, res) => {
 	});
 });
 
+router.post("/updateAnnonce", (req, res) => {
+	Annonce.findById(req.body.annonce._id, (err, a) => {
+		if (a) {
+			a.nom = req.body.annonce.nom;
+			a.categorie = req.body.annonce.categorie;
+			a.prix = req.body.annonce.prix;
+			a.taille = req.body.annonce.taille;
+			a.description = req.body.annonce.description;
+			if (req.body.urlImage) {
+				a.photo = req.body.urlImage;
+			}
+
+			a.save((err, annonce) => {
+				res.json({
+					success: true,
+					message: "Votre annonce a bien été mise à jour",
+					annonce: annonce
+				});
+			});
+		} else {
+			res.json({
+				success: false,
+				message: "Une erreur est arrivée"
+			});
+		}
+	});
+});
+
 router.post("/getAnnonces", (req, res) => {
 	// console.log("///////////////////////");
 	// console.log(req.body.annonces);

@@ -23,7 +23,7 @@ import {
 	Row,
 	Col
 } from "reactstrap";
-
+import ModifAnnonce from "../../Components/ModifAnnonce"
 import Api from "../../Services/Api";
 
 export default class EnterpriseDashboard extends Component {
@@ -42,8 +42,8 @@ export default class EnterpriseDashboard extends Component {
 			description: "",
 			file: null,
 			mesAnnonces: [],
-			modifAnnounce: [],
-			modifAnnounce: this.props.modifAnnounce
+			modifAnnounce: null,
+			modifAnnounce: this.props.modifAnnounce,
 		};
 	}
 	componentDidMount() {
@@ -102,8 +102,6 @@ export default class EnterpriseDashboard extends Component {
 	// };
 
 	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen });
-	toggleModalModif = () =>
-		this.setState({ modalOpenModif: !this.state.modalOpenModif });
 
 	publierAnnonce = () => {
 		console.log(this.state);
@@ -163,111 +161,7 @@ export default class EnterpriseDashboard extends Component {
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.categorie}</CardSubtitle>
 							<CardText>{annonce.prix}</CardText>
-
-							<Button color="primary" onClick={this.toggleModalModif}>
-								Modifier
-							</Button>
-							{/* start modal modifier les annonce*/}
-							<Modal
-								isOpen={this.state.modalOpenModif}
-								toggle={this.toggleModalModif}
-							>
-								<ModalHeader toggle={this.toggleModalModif}>
-									Modifier l'annonce
-								</ModalHeader>
-								<ModalBody>
-									<Form>
-										<FormGroup>
-											<Label>Nom du produit</Label>
-											<Input
-												type="text"
-												name="nom"
-												placeholder="Le nom du produit"
-												onChange={this.handleInputChange}
-												value={this.state.produit}
-											/>
-										</FormGroup>
-										<FormGroup>
-											<Label>Catégorie</Label>
-											<Input
-												type="select"
-												name="categorie"
-												onChange={this.handleSelectCategorie}
-												value={this.state.categorie}
-											>
-												<option value="mariage">Gateau mariage</option>
-												<option value="fete">Gateau fête</option>
-												<option value="anniversaire">
-													Gateau d'anniversaire
-												</option>
-											</Input>
-										</FormGroup>
-										<FormGroup>
-											<Label>Quantité</Label>
-											<Input
-												type="select"
-												name="quantite"
-												onChange={this.handleSelectQuantite}
-												value={this.state.quantite}
-											>
-												<option value="1">1</option>
-												<option value="2">2</option>
-												<option value="3">3</option>
-												<option value="4">4</option>
-												<option value="5">5</option>
-											</Input>
-										</FormGroup>
-										<FormGroup>
-											<Label>Prix unitaire</Label>
-											<Input
-												type="number"
-												name="prix"
-												placeholder="Prix du produit"
-												value={this.state.prix}
-												onChange={this.handleInputChange}
-											/>
-										</FormGroup>
-										<FormGroup>
-											<Label>Taille</Label>
-											<Input type="select" name="taille">
-												<option>Petite</option>
-												<option>Moyenne</option>
-												<option>Grande</option>
-											</Input>
-										</FormGroup>
-
-										<FormGroup>
-											<Label>Description du gâteau</Label>
-											<Input
-												type="textarea"
-												name="description"
-												onChange={this.handleInputChange}
-												value={this.state.description}
-											/>
-										</FormGroup>
-
-										<FormGroup>
-											<Label>Image</Label>
-											<Input
-												type="file"
-												name="file"
-												onChange={this.handleImageChange}
-												//onChange={this.onFile}
-												// value={this.state.file}
-											/>
-										</FormGroup>
-									</Form>
-								</ModalBody>
-								<ModalFooter>
-									<Button color="primary" onClick={this.publierAnnonce}>
-										Update
-									</Button>{" "}
-									<Button color="secondary" onClick={this.toggleModalModif}>
-										Cancel
-									</Button>
-								</ModalFooter>
-							</Modal>
-
+							<ModifAnnonce  {...annonce}/>
 							<Button
 								color="danger"
 								onClick={() => this.deleteAnnonce(annonce._id)}
