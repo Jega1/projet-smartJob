@@ -2,10 +2,69 @@ var express = require("express");
 var router = express.Router();
 var Enterprise = require("../model/enterprise").Enterprise;
 var Annonce = require("../model/annonce").Annonce;
-
-const multer = require("multer");
 const secret = "3ywb*XEGEC7)";
 const jwt = require("jwt-simple");
+const { uuid } = require("uuidv4");
+const DIR = "./";
+const multer = require("multer");
+var cloudinary = require("cloudinary").v2;
+/// permet d'authentifier avec cloudinary
+cloudinary.config({
+	cloud_name: "drqoryqj0",
+	api_key: "616359531224173",
+	api_secret: "Qce5c_9Ft2z0Rp6Zqvdt03Lhr6s"
+});
+
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, DIR);
+	},
+	filename: (req, file, cb) => {
+		const fileName = file.originalname
+			.toLowerCase()
+			.split(" ")
+			.join("-");
+		cb(null, uuid() + "-" + fileName);
+	}
+});
+
+var upload = multer({
+	storage: storage,
+	fileFilter: (req, file, cb) => {
+		if (
+			file.mimetype == "image/png" ||
+			file.mimetype == "image/jpg" ||
+			file.mimetype == "image/jpeg"
+		) {
+			cb(null, true);
+		} else {
+			cb(null, false);
+			return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+		}
+	}
+});
+
+// router pour uploader une image
+router.post("/uploadFile", upload.single("myImage"), (req, res) => {
+	//var img = fs.readFileSync(req.file.path);
+	console.log("TTTEEEESSSSTTTT");
+	console.log(req.file);
+	cloudinary.uploader.upload(req.file.path, function(error, result) {
+		console.log(error);
+		if (error) {
+			res.json({
+				success: false,
+				message: errir
+			});
+		} else {
+			res.json({
+				success: true,
+				url: result.secure_url
+			});
+		}
+		console.log(result);
+	});
+});
 
 // fonction pour vérifier l'utilisateur pour le login(2)
 function checkUser(email, password) {
@@ -36,18 +95,6 @@ function checkUser(email, password) {
 		});
 	});
 }
-
-// SET STORAGE
-var storage = multer.diskStorage({
-	destination: function(req, file, cb) {
-		cb(null, "uploads");
-	},
-	filename: function(req, file, cb) {
-		cb(null, Date.now() + "-" + file.originalname);
-	}
-});
-
-var upload = multer({ storage: storage });
 
 ///////////////////////////////////
 
@@ -119,19 +166,17 @@ router.post("/enterpriseList", (req, res) => {
 	});
 });
 
-router.post("/publierAnnonce", upload.single("file"), (req, res) => {
+router.post("/publierAnnonce", (req, res) => {
 	let a = new Annonce();
-
 	a.nom = req.body.annonce.nom;
 	a.categorie = req.body.annonce.categorie;
 	a.prix = req.body.annonce.prix;
 	a.taille = req.body.annonce.taille;
 	a.description = req.body.annonce.description;
-	//a.file = req.file.path;
-	console.log(req.body);
 	a.enterprise = req.body.annonce.enterprise._id;
-	console.log("fahhhfhfhfhfhfh");
-
+	if (req.body.urlImage) {
+		a.photo = req.body.urlImage;
+	}
 	a.save(function(err, annonce) {
 		console.log(annonce);
 		if (err) {

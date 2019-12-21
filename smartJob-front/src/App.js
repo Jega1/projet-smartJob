@@ -2,7 +2,7 @@ import React from "react";
 import "./static/css/style.css";
 import "./static/css/footer.css";
 import "./static/css/nav.css";
-
+import "./static/css/produitDetaille.css";
 
 import "./static/css/carousel.css";
 
@@ -72,9 +72,8 @@ function App() {
 					<Route path="/EnterpriseDashboard">
 						<EnterpriseDashboard />
 					</Route>
-					<Route path="/ModifProduit">
-						
-					</Route>
+					<Route path="/ModifProduit"></Route>
+					<Route path="/AnnonceDetaille/:id"></Route>
 					<Route path="/">
 						<Home />
 					</Route>

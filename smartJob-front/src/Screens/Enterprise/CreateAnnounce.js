@@ -104,7 +104,7 @@ export default class CreateAnnounce extends Component {
 						</FormGroup>
 
 						<FormGroup row>
-							<Label sm={2}>Discription</Label>
+							<Label sm={2}>Description</Label>
 							<Col sm={8}>
 								<Input
 									onChange={this.handleInputChange}

@@ -16,7 +16,8 @@ var annonceSchema = new Schema({
 	date: {
 		type: Date,
 		default: new Date()
-	}
+	},
+	photo: String // url de la photo
 });
 
 var Annonce = mongoose.model("Annonce", annonceSchema);

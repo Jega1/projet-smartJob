@@ -31,10 +31,20 @@ export default class Api {
 			password: password
 		});
 	}
-	publierAnnonce(annonce) {
+	publierAnnonce(annonce, urlImage) {
 		return axios.post(this.url + "/enterprise/publierAnnonce", {
-			annonce: annonce
+			annonce: annonce,
+			urlImage: urlImage
 		});
+	}
+
+	uploadFile(formData) {
+		const config = {
+			headers: {
+				"content-type": "multipart/form-data"
+			}
+		};
+		return axios.post(this.url + "/enterprise/uploadFile", formData, config);
 	}
 
 	getAnnonces(enterprise) {
@@ -52,10 +62,10 @@ export default class Api {
 		return axios.get(this.url + "/client/getAllAnnonces");
 	}
 
-	commander(panier, user){
+	commander(panier, user) {
 		return axios.post(this.url + "/client/commander", {
 			panier: panier,
 			user: user
-		})
+		});
 	}
 }

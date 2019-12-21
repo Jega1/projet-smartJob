@@ -13,6 +13,7 @@ import {
 	Button
 } from "reactstrap";
 import Api from "../../Services/Api";
+import AnnonceDetaille from "./AnnonceDetaille";
 
 export default class ClientDashboard extends Component {
 	constructor(props) {
@@ -68,7 +69,6 @@ export default class ClientDashboard extends Component {
 				<Col md="4">
 					<Card key={index}>
 						<CardBody>
-							
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.prix}$</CardSubtitle>
 						</CardBody>
@@ -80,14 +80,19 @@ export default class ClientDashboard extends Component {
 							>
 								Ajouter au panier
 							</Button>
+							<Button color="success" onClick={this.AnnonceDetaille}>
+								Voir le produits
+							</Button>
 						</CardBody>
 					</Card>
 				</Col>
 			);
 		});
+
 		return (
 			<div>
 				<Container>
+					{/* <AnnonceDetaille /> */}
 					<Row>{annonces}</Row>
 				</Container>
 			</div>

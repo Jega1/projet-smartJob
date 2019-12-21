@@ -66,8 +66,7 @@ export default class EnterpriseLogin extends Component {
 	render() {
 		return (
 			<div>
-				
-			<Container
+				<Container
 				
 					style={{
 					backgroundColor: "whitesmoke",

@@ -55,7 +55,6 @@ export default class EnterpriseDashboard extends Component {
 			return;
 		}
 
-
 		this.setState({ enterprise: JSON.parse(enterp) }, () => {
 			this.api.getAnnonces(this.state.enterprise).then(res => {
 				console.log(res.data);
@@ -73,7 +72,14 @@ export default class EnterpriseDashboard extends Component {
 	};
 
 	handleInputChange = event => {
+		// this.setState({ [event.target.name]: event.target.value });
 		this.setState({ [event.target.name]: event.target.value });
+	};
+
+	handleImageChange = event => {
+		// this.setState({ [event.target.name]: event.target.value });
+		console.log(event.target.files[0]);
+		this.setState({ file: event.target.files[0] });
 	};
 
 	handleSelectQuantite = event => {
@@ -101,9 +107,26 @@ export default class EnterpriseDashboard extends Component {
 
 	publierAnnonce = () => {
 		console.log(this.state);
-		this.api.publierAnnonce(this.state).then(res => {
-			console.log(res.data);
-		});
+		const formData = new FormData();
+		formData.append("myImage", this.state.file);
+		// d'abord on upload le fichier, ensuite on prend l'url et on le passe à publierAnnonce
+		if (this.state.file) {
+			this.api.uploadFile(formData).then(res => {
+				if (res.data.success) {
+					let url = res.data.url;
+					// si tout c'est bien passé, on publie l'annonce et on passe l'URL de l'image à publierAnnonce
+					this.api.publierAnnonce(this.state, url).then(res => {
+						console.log(res.data);
+					});
+				} else {
+					alert("Erreur lors de l'upload de l'image");
+				}
+			});
+		} else {
+			this.api.publierAnnonce(this.state, null).then(res => {
+				console.log(res.data);
+			});
+		}
 	};
 
 	deleteAnnonce = id => {
@@ -133,9 +156,9 @@ export default class EnterpriseDashboard extends Component {
 						<CardImg
 							top
 							width="100%"
-							src="/assets/318x180.svg"
+							src={annonce.photo}
 							alt="Card image cap"
-						/> 
+						/>
 						<CardBody>
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.categorie}</CardSubtitle>
@@ -228,9 +251,9 @@ export default class EnterpriseDashboard extends Component {
 											<Input
 												type="file"
 												name="file"
-												onChange={this.handleInputChange}
+												onChange={this.handleImageChange}
 												//onChange={this.onFile}
-												value={this.state.file}
+												// value={this.state.file}
 											/>
 										</FormGroup>
 									</Form>
@@ -258,7 +281,7 @@ export default class EnterpriseDashboard extends Component {
 		});
 		return (
 			<div>
-				Bienvenue sur votre dashboard entreprise
+				<h2> Bienvenue sur votre espace </h2>
 				{this.state.enterprise ? this.state.enterprise.nom : null}
 				<Button color="primary" onClick={this.toggleModal}>
 					Ajouter
@@ -345,9 +368,9 @@ export default class EnterpriseDashboard extends Component {
 								<Input
 									type="file"
 									name="file"
-									onChange={this.handleInputChange}
+									onChange={this.handleImageChange}
 									//onChange={this.onFile}
-									value={this.state.file}
+									// value={this.state.file}
 								/>
 							</FormGroup>
 						</Form>
