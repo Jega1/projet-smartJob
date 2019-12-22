@@ -42,6 +42,10 @@ export default class ClientDashboard extends Component {
 		});
 	}
 
+	// monCompte = () => {
+	// 	window.location = "/ClientDashboard";
+	// };
+
 	logout = () => {
 		localStorage.clear();
 		window.location = "/";
@@ -68,6 +72,12 @@ export default class ClientDashboard extends Component {
 			return (
 				<Col md="4">
 					<Card key={index}>
+						<CardImg
+							top
+							width="100%"
+							src={annonce.photo}
+							alt="Card image cap"
+						/>
 						<CardBody>
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.prix}$</CardSubtitle>

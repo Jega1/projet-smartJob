@@ -5,9 +5,17 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
+import Api from "../../Services/Api";
 
 export default class AllAnnounce extends Component {
+	constructor(props) {
+		super(props);
+		this.api = new Api();
+		this.state = {
+			annonces: []
+		};
+	}
+
 	render() {
 		return (
 			<div>

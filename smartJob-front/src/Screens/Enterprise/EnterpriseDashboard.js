@@ -23,7 +23,7 @@ import {
 	Row,
 	Col
 } from "reactstrap";
-import ModifAnnonce from "../../Components/ModifAnnonce"
+import ModifAnnonce from "../../Components/ModifAnnonce";
 import Api from "../../Services/Api";
 
 export default class EnterpriseDashboard extends Component {
@@ -43,7 +43,7 @@ export default class EnterpriseDashboard extends Component {
 			file: null,
 			mesAnnonces: [],
 			modifAnnounce: null,
-			modifAnnounce: this.props.modifAnnounce,
+			modifAnnounce: this.props.modifAnnounce
 		};
 	}
 	componentDidMount() {
@@ -56,20 +56,19 @@ export default class EnterpriseDashboard extends Component {
 		}
 
 		this.setState({ enterprise: JSON.parse(enterp) }, () => {
-			this.getAnnonces()
+			this.getAnnonces();
 		});
 		console.log(this.state);
 	}
 
-
-	getAnnonces = () =>{
+	getAnnonces = () => {
 		this.api.getAnnonces(this.state.enterprise).then(res => {
 			console.log(res.data);
 			if (res.data.success) {
 				this.setState({ mesAnnonces: res.data.mesAnnonces });
 			}
 		});
-	}
+	};
 
 	logout = () => {
 		localStorage.clear();
@@ -166,6 +165,7 @@ export default class EnterpriseDashboard extends Component {
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.categorie}</CardSubtitle>
 							<CardText>{annonce.prix}</CardText>
+							<CardText>{annonce.description}</CardText>
 							<ModifAnnonce {...annonce} getAnnonces={this.getAnnonces} />
 							<Button
 								color="danger"

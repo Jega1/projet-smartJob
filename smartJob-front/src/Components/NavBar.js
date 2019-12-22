@@ -63,112 +63,114 @@ export default class Nav extends Component {
 
 	render() {
 		return (
-						<nav class="menu">
-							<h1 class="menu__logo">Smart job</h1>
+			<nav class="menu">
+				<h1 class="menu__logo">Smart job</h1>
 
-							<div className="menu__right">
-								<button
-									class="navbar-toggler"
-									type="button"
-									data-toggle="collapse"
-									data-target="#navbarNavDropdown"
-									aria-controls="navbarNavDropdown"
-									aria-expanded="false"
-									aria-label="Toggle navigation"
+				<div className="menu__right">
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarNavDropdown"
+						aria-controls="navbarNavDropdown"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<ul class="menu__list">
+						<li class="menu__list-item">
+							<Link className="menu__link menu__link--active" to="/">
+								Home
+							</Link>
+						</li>
+
+						<li class="menu__list-item">
+							<Link className="menu__link" to="/about">
+								contact
+							</Link>
+						</li>
+
+						<li class="menu__list-item">
+							{this.state.user ? (
+								<Dropdown
+									isOpen={this.state.openDetails}
+									toggle={this.toggleDetails}
 								>
-									<span class="navbar-toggler-icon"></span>
-								</button>
-
-								<ul class="menu__list">
-									<li class="menu__list-item">
-										<Link className="menu__link menu__link--active" to="/">
-											Home
+									<DropdownToggle caret>{this.state.user.email}</DropdownToggle>
+									<DropdownMenu>
+										<DropdownItem onClick={this.monCompte}>
+											{" "}
+											Mon compte
+										</DropdownItem>
+										<DropdownItem onClick={this.logout}>
+											Se déconnecter
+										</DropdownItem>
+									</DropdownMenu>
+								</Dropdown>
+							) : (
+								<Dropdown isOpen={this.state.open} toggle={this.toggle}>
+									<DropdownToggle caret>Connexion</DropdownToggle>
+									<DropdownMenu>
+										<Link to="/ClientLogin">
+											<DropdownItem>Client</DropdownItem>
 										</Link>
-									</li>
 
-									<li class="menu__list-item">
-										<Link className="menu__link" to="/about">
-											contact
+										<Link to="/EntrepriseLogin">
+											<DropdownItem>Entreprise</DropdownItem>
 										</Link>
-									</li>
-
-									<li class="menu__list-item">
-										{this.state.user ? (
-											<Dropdown
-
-												isOpen={this.state.openDetails}
-												toggle={this.toggleDetails}
-											>
-												<DropdownToggle caret>{this.state.user.nom}</DropdownToggle>
-												<DropdownMenu>
-													<DropdownItem>Mon compte</DropdownItem>
-													<DropdownItem onClick={this.logout}>
-														Se déconnecter
-													</DropdownItem>
-												</DropdownMenu>
-											</Dropdown>
-										) : (
-											<Dropdown isOpen={this.state.open} toggle={this.toggle}>
-												<DropdownToggle caret>Connexion</DropdownToggle>
-												<DropdownMenu>
-													<Link to="/ClientLogin">
-														<DropdownItem>Client</DropdownItem>
-													</Link>
-
-													<Link to="/EntrepriseLogin">
-														<DropdownItem>Entreprise</DropdownItem>
-													</Link>
-												</DropdownMenu>
-											</Dropdown>
-										)}
-									</li>
-									{this.state.user && this.state.panier ? (
-										<span>
-											<Button color="success" outline onClick={this.togglePanier}>
-												Panier{" "}
-												<Badge color="secondary">{this.state.panier.length}</Badge>
-											</Button>
-											<Modal
-												isOpen={this.state.openPanier}
-												toggle={this.togglePanier}
-											>
-												<ModalHeader toggle={this.togglePanier}>
-													Mon panier
-												</ModalHeader>
-												<ModalBody>
-													<ListGroup>
-														{this.state.panier.map((article, index) => {
-															return (
-																<ListGroupItem className="justify-content-between">
-																	{article.nom} <Badge pill>{article.prix} $</Badge>
-																</ListGroupItem>
-															);
-														})}
-													</ListGroup>
-												</ModalBody>
-												<ModalFooter>
-													<h1>
-														Total:
-														{this.state.panier.reduce(
-															(acc, current) => acc + current.prix,
-															0
-														)}{" "}
-														$
-													</h1>
-													<Button color="primary" onClick={this.commander}>
-														Commander
-													</Button>{" "}
-													<Button color="secondary" onClick={this.togglePanier}>
-														Annuler
-													</Button>
-												</ModalFooter>
-											</Modal>
-										</span>
-									) : null}
-								</ul>
-							</div>
-						</nav>
-					);
+									</DropdownMenu>
+								</Dropdown>
+							)}
+						</li>
+						{this.state.user && this.state.panier ? (
+							<span>
+								<Button color="success" outline onClick={this.togglePanier}>
+									Panier{" "}
+									<Badge color="secondary">{this.state.panier.length}</Badge>
+								</Button>
+								<Modal
+									isOpen={this.state.openPanier}
+									toggle={this.togglePanier}
+								>
+									<ModalHeader toggle={this.togglePanier}>
+										Mon panier
+									</ModalHeader>
+									<ModalBody>
+										<ListGroup>
+											{this.state.panier.map((article, index) => {
+												return (
+													<ListGroupItem className="justify-content-between">
+														{article.nom} <Badge pill>{article.prix} $</Badge>
+													</ListGroupItem>
+												);
+											})}
+										</ListGroup>
+									</ModalBody>
+									<ModalFooter>
+										<h1>
+											Total:
+											{this.state.panier.reduce(
+												(acc, current) => acc + current.prix,
+												0
+											)}{" "}
+											$
+										</h1>
+										<Button color="primary" onClick={this.commander}>
+											Commander
+										</Button>{" "}
+										<Button color="secondary" onClick={this.togglePanier}>
+											Annuler
+										</Button>
+									</ModalFooter>
+								</Modal>
+							</span>
+						) : null}
+					</ul>
+				</div>
+			</nav>
+		);
 				}
 			}
 
