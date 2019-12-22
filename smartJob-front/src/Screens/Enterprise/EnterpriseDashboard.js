@@ -56,14 +56,19 @@ export default class EnterpriseDashboard extends Component {
 		}
 
 		this.setState({ enterprise: JSON.parse(enterp) }, () => {
-			this.api.getAnnonces(this.state.enterprise).then(res => {
-				console.log(res.data);
-				if (res.data.success) {
-					this.setState({ mesAnnonces: res.data.mesAnnonces });
-				}
-			});
+			this.getAnnonces()
 		});
 		console.log(this.state);
+	}
+
+
+	getAnnonces = () =>{
+		this.api.getAnnonces(this.state.enterprise).then(res => {
+			console.log(res.data);
+			if (res.data.success) {
+				this.setState({ mesAnnonces: res.data.mesAnnonces });
+			}
+		});
 	}
 
 	logout = () => {
@@ -161,7 +166,7 @@ export default class EnterpriseDashboard extends Component {
 							<CardTitle>{annonce.nom}</CardTitle>
 							<CardSubtitle>{annonce.categorie}</CardSubtitle>
 							<CardText>{annonce.prix}</CardText>
-							<ModifAnnonce  {...annonce}/>
+							<ModifAnnonce {...annonce} getAnnonces={this.getAnnonces} />
 							<Button
 								color="danger"
 								onClick={() => this.deleteAnnonce(annonce._id)}

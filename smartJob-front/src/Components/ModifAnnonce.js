@@ -50,7 +50,8 @@ export default class Nav extends Component {
 					let url = res.data.url;
 					// si tout c'est bien passé, on publie l'annonce et on passe l'URL de l'image à publierAnnonce
 					this.api.updateAnnonce(this.state, url).then(res => {
-						console.log(res.data);
+						this.props.getAnnonces();
+						this.toggleModalModif();
 					});
 				} else {
 					alert("Erreur lors de l'upload de l'image");
