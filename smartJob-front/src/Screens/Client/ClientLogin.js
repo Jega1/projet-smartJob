@@ -23,13 +23,17 @@ export default class ClientLogin extends Component {
 	};
 
 	componentDidMount() {
-		// on vérifie le token
-
 		let token = localStorage.getItem("tokenClient");
-		if (token) {
-			// si le token existe dans le localstorage
-			// TODO vérifier avec la bdd
-			window.location = "/clientDashboard";
+		let c = localStorage.getItem("client");
+
+		if (token && c) {
+			// si le token est présent dans le localstorage, il faut en plus vérifier si ce token est valide
+			// on l'envoie à nodejs, nodejs le déchiffre avec le secret key et vérifie si ce token correspond à un user id
+			this.api.checkToken(token).then(res => {
+				if (res.data.success) {
+					window.location = "/clientDashboard";
+				}
+			});
 		}
 	}
 

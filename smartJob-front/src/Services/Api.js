@@ -60,6 +60,11 @@ export default class Api {
 		});
 	}
 
+	// route pour récupérer les premières annonces seulement
+	getFirstAnnonces() {
+		return axios.get(this.url + "/client/getFirstAnnonces");
+	}
+
 	deleteAnnonce(id) {
 		return axios.delete(this.url + "/enterprise/deleteAnnonce/" + id);
 	}
@@ -69,10 +74,25 @@ export default class Api {
 		return axios.get(this.url + "/client/getAllAnnonces");
 	}
 
-	commander(panier, user) {
+	commander(panier, client) {
 		return axios.post(this.url + "/client/commander", {
 			panier: panier,
-			user: user
+			client: client
+		});
+	}
+
+	getAnnonceById(annonceId) {
+		return axios.get(this.url + "/client/getAnnonceById/" + annonceId);
+	}
+	checkToken(token) {
+		return axios.post(this.url + "/client/checkToken", {
+			token: token
+		});
+	}
+
+	getMesCommandes(client) {
+		return axios.post(this.url + "/client/getMesCommandes", {
+			client: client
 		});
 	}
 }

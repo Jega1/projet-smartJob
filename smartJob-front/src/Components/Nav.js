@@ -24,14 +24,18 @@ export default class Nav extends Component {
 	constructor(props) {
 		super(props);
 		this.api = new Api();
+		this.state = {
+			open: false,
+			openDetails: false,
+			openPanier: false,
+			user: this.props.user,
+			panier: this.props.panier
+		};
+		console.log(this.state);
 	}
-	state = {
-		open: false,
-		openDetails: false,
-		openPanier: false,
-		user: this.props.user,
-		panier: this.props.panier
-	};
+	componentWillMount() {
+		console.log("NAV rendered");
+	}
 
 	toggle = () => {
 		this.setState({ open: !this.state.open });
@@ -51,7 +55,8 @@ export default class Nav extends Component {
 		this.api.commander(this.state.panier, this.state.user).then(res => {
 			if (res.data.success) {
 				localStorage.removeItem("panier");
-				alert(res.data.message);
+				alert("Votre commande a bien été prise en compte :)");
+				window.location.reload();
 			}
 		});
 	};
@@ -110,7 +115,11 @@ export default class Nav extends Component {
 									>
 										<DropdownToggle caret>{this.state.user.nom}</DropdownToggle>
 										<DropdownMenu>
-											<DropdownItem>Mon compte</DropdownItem>
+											<DropdownItem
+												onClick={() => (window.location = "/clientDashboard")}
+											>
+												Mon compte
+											</DropdownItem>
 											<DropdownItem onClick={this.logout}>
 												Se déconnecter
 											</DropdownItem>

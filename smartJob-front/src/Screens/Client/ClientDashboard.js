@@ -28,18 +28,27 @@ export default class ClientDashboard extends Component {
 		let token = localStorage.getItem("tokenClient");
 		let c = localStorage.getItem("client");
 
-		if (!token || !c) {
-			window.location = "/clientLogin";
-			return;
-		}
-
-		this.setState({ client: JSON.parse(c) });
-		this.api.getAllAnnonces().then(res => {
-			console.log(res.data);
-			this.setState({
-				annonces: res.data.allAnnonces
+		if (token && c) {
+			// si le token est présent dans le localstorage, il faut en plus vérifier si ce token est valide
+			// on l'envoie à nodejs, nodejs le déchiffre avec le secret key et vérifie si ce token correspond à un user id
+			this.api.checkToken(token).then(res => {
+				if (res.data.success) {
+					this.setState({ client: res.data.client });
+					this.api.getAllAnnonces().then(res => {
+						console.log(res.data);
+						this.setState({
+							annonces: res.data.allAnnonces
+						});
+					});
+				} else {
+					localStorage.clear();
+					window.location = "/clientLogin";
+				}
 			});
-		});
+		} else {
+			localStorage.clear();
+			window.location = "/clientLogin";
+		}
 	}
 
 	// monCompte = () => {
@@ -58,13 +67,13 @@ export default class ClientDashboard extends Component {
 			// si le panier existe, on le prend et on y ajoute le nouvel article
 			panier.push(annonce);
 			localStorage.setItem("panier", JSON.stringify(panier));
-			window.location.reload();
 		} else {
 			// si le panier n'existe pas encore, on le créé
 			let p = [];
 			p.push(annonce);
 			localStorage.setItem("panier", JSON.stringify(p));
 		}
+		window.location.reload();
 	};
 
 	render() {
@@ -90,7 +99,10 @@ export default class ClientDashboard extends Component {
 							>
 								Ajouter au panier
 							</Button>
-							<Button color="success" onClick={this.AnnonceDetaille}>
+							<Button
+								color="success"
+								onClick={() => (window.location = "/annonce/" + annonce._id)}
+							>
 								Voir le produits
 							</Button>
 						</CardBody>

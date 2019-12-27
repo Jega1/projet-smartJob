@@ -104,11 +104,98 @@ router.get("/getAllAnnonces", (req, res) => {
 // router pour commander
 router.post("/commander", (req, res) => {
 	let c = new Commande();
-	c.acheteur = req.body.user._id;
+	c.acheteur = req.body.client._id;
 	c.panier = req.body.panier;
 	c.total = req.body.panier.reduce((acc, current) => acc + current.prix, 0);
 	c.save((err, commande) => {
 		res.json({ success: true, commande: commande });
+	});
+});
+
+/// route pour récup les 8 premieres annonces
+router.get("/getFirstAnnonces", (req, res) => {
+	Annonce.find()
+		.limit(8)
+		.sort({ date: -1 })
+		.exec((err, annonces) => {
+			if (!err) {
+				res.json({
+					success: true,
+					annonces: annonces
+				});
+			} else {
+				res.send(400);
+			}
+		});
+});
+
+router.get("/getAnnonceById/:annonceId", (req, res) => {
+	console.log(req.params.annonceId);
+	if (req.params.annonceId) {
+		Annonce.findById(req.params.annonceId, (err, annonce) => {
+			if (annonce) {
+				res.json({
+					success: true,
+					annonce: annonce
+				});
+			} else {
+				res.json({
+					success: false,
+					message: "Annonce non trouvée"
+				});
+			}
+		});
+	} else {
+		res.send(404);
+	}
+});
+
+router.post("/checkToken", (req, res) => {
+	if (req.body.token) {
+		// ici on prend le token envoyé par le front, et on le décode avec le secret pour obtenir un id (qui correspon à l'id du user)
+		try {
+			let id = jwt.decode(req.body.token, secret);
+			console.log("//////////////////////////", id);
+			Client.findById(id, (err, client) => {
+				// on cherche un user avec cet id pour voir s'il existe dans la base de données
+				if (client) {
+					client.password = null;
+					client.salt = null;
+					res.json({
+						success: true,
+						client: client
+					});
+				} else {
+					// si le user n'existe pas dans la base de données, alors on envoie un false
+					res.json({
+						success: false
+					});
+				}
+			});
+		} catch {
+			res.json({
+				success: false
+			});
+		}
+	} else {
+		res.json({
+			success: false
+		});
+	}
+});
+
+router.post("/getMesCommandes", (req, res) => {
+	Commande.find({ acheteur: req.body.client._id }, (err, commandes) => {
+		if (!err) {
+			res.json({
+				success: true,
+				commandes: commandes
+			});
+		} else {
+			res.json({
+				success: false
+			});
+		}
 	});
 });
 
