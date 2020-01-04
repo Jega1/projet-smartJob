@@ -121,6 +121,11 @@ export default class Nav extends Component {
 											>
 												Mon compte
 											</DropdownItem>
+											<DropdownItem
+												onClick={()=>(window.location = "/mesCommandes")}
+											>
+												Mes commandes
+											</DropdownItem>
 											<DropdownItem onClick={this.logout}>
 												Se déconnecter
 											</DropdownItem>

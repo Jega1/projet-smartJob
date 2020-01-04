@@ -12,7 +12,11 @@ import {
 	Container,
 	Row,
 	Col,
-	Button
+	Button,
+	ListGroup,
+	ListGroupItem,
+	ListGroupItemText,
+	ListGroupItemHeading
 } from "reactstrap";
 
 export default class MesCommandes extends Component {
@@ -56,14 +60,18 @@ export default class MesCommandes extends Component {
 	render() {
 		let commandes = this.state.commandes.map((commande, index) => {
 			return (
-				<div key={index}>
-					<hr />
+				<ListGroupItem key={index} color={index % 2 == 0 ? "warning" : "info"}>
+					<ListGroupItemHeading>Total: {commande.total} $</ListGroupItemHeading>
 					{commande.panier.map((p, i) => {
-						return <div key={i}>{p.nom}</div>;
+						return (
+							<ListGroupItemText key={i}>
+								{p.nom} - {p.prix}$
+							</ListGroupItemText>
+						);
 					})}
-				</div>
+				</ListGroupItem>
 			);
 		});
-		return <div>{commandes}</div>;
+		return <ListGroup flush>{commandes}</ListGroup>;
 	}
 }

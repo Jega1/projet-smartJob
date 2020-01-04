@@ -31,6 +31,7 @@ export default class EnterpriseDashboard extends Component {
 		super(props);
 		this.api = new Api();
 		this.state = {
+			loading: false,
 			enterprise: {},
 			modalOpen: false,
 			modalOpenModif: false,
@@ -108,7 +109,7 @@ export default class EnterpriseDashboard extends Component {
 	toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen });
 
 	publierAnnonce = () => {
-		console.log(this.state);
+		this.setState({ loading: true });
 		const formData = new FormData();
 		formData.append("myImage", this.state.file);
 		// d'abord on upload le fichier, ensuite on prend l'url et on le passe à publierAnnonce
@@ -123,10 +124,12 @@ export default class EnterpriseDashboard extends Component {
 				} else {
 					alert("Erreur lors de l'upload de l'image");
 				}
+				this.setState({ loading: false, modalOpen: false });
 			});
 		} else {
 			this.api.publierAnnonce(this.state, null).then(res => {
 				console.log(res.data);
+				this.setState({ loading: false, modalOpen: false });
 			});
 		}
 	};
@@ -275,8 +278,12 @@ export default class EnterpriseDashboard extends Component {
 						</Form>
 					</ModalBody>
 					<ModalFooter>
-						<Button color="primary" onClick={this.publierAnnonce}>
-							Ajouter 
+						<Button
+							color="primary"
+							onClick={this.publierAnnonce}
+							disabled={this.state.loading}
+						>
+							Ajouter
 						</Button>{" "}
 						<Button color="secondary" onClick={this.toggleModal}>
 							Cancel
