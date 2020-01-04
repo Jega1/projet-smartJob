@@ -35,7 +35,7 @@ export default class Footer extends Component {
 
 						<div className="footerThird fooboo">
 							<h3>CONTACT</h3>
-							<p>Lorem ipsum dolor sit amet.</p>
+							<p><i class="fas fa-home">09 75 75 12 39</i>.</p>
 							<p>Lorem ipsum dolor sit amet.</p>
 							<p>Lorem ipsum dolor sit amet.</p>
 							<p>Lorem ipsum dolor sit amet.</p>
@@ -43,7 +43,7 @@ export default class Footer extends Component {
 					</div>
 
 					<div className='copy-right'>
-						<h4>copy right</h4>
+						<h4>copy right Jega KULATHILAGAPILLAI</h4>
 					</div>
 				</footer>
 

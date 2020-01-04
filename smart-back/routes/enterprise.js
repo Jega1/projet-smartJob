@@ -8,6 +8,8 @@ const { uuid } = require("uuidv4");
 const DIR = "./";
 const multer = require("multer");
 var cloudinary = require("cloudinary").v2;
+var fs = require("fs");
+
 /// permet d'authentifier avec cloudinary
 cloudinary.config({
 	cloud_name: "drqoryqj0",
@@ -46,11 +48,12 @@ var upload = multer({
 
 // router pour uploader une image
 router.post("/uploadFile", upload.single("myImage"), (req, res) => {
-	//var img = fs.readFileSync(req.file.path);
-	console.log("TTTEEEESSSSTTTT");
+
+
 	console.log(req.file);
 	cloudinary.uploader.upload(req.file.path, function(error, result) {
 		console.log(error);
+
 		if (error) {
 			res.json({
 				success: false,
@@ -62,6 +65,9 @@ router.post("/uploadFile", upload.single("myImage"), (req, res) => {
 				url: result.secure_url
 			});
 		}
+		// une fois que l'image a été téléchargée dans le cloud, on la supprime de notre dossier pour ne pas occuper de la place pour rien
+		// toutes les photos sont stockées dans le cloud
+		fs.unlinkSync(req.file.destination + req.file.path);
 		console.log(result);
 	});
 });

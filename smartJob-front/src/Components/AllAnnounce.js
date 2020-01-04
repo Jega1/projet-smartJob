@@ -49,7 +49,7 @@ export default class AllAnnounce extends Component {
 						<CardImg
 							top
 							width="100%"
-							height="200px"
+							height="300px"
 							src={annonce.photo}
 							alt="Card image cap"
 						/>

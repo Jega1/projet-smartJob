@@ -7,7 +7,7 @@ const MediaList = props => {
 			<Row>
 				<Col sm="6" xs="12">
 					<Jumbotron>
-						<h1 className="display-">Hello, world!</h1>
+						<h1 className="display-">Les meilleur pâtissier</h1>
 						<p className="lead">
 							This is a simple hero unit, a simple Jumbotron-style component for
 							calling extra attention to featured content or information.

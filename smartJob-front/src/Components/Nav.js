@@ -72,6 +72,7 @@ export default class Nav extends Component {
 				<nav id="menu" className="navbar navbar-expand-lg navbar-dark ">
 					<Link to="/" className="navbar-brand">
 						<i class="fas fa-home">LOGO</i>
+						<img src="" />
 					</Link>
 					<button
 						class="navbar-toggler"
@@ -99,7 +100,7 @@ export default class Nav extends Component {
 							</li>
 							<li class="nav-item">
 								<Link className="nav-link" to="/about">
-									contact
+									About us
 								</Link>
 							</li>{" "}
 							<li class="nav-item">

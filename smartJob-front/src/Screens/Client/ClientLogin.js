@@ -9,7 +9,6 @@ import {
 	Input,
 	Button
 } from "reactstrap";
-import SearchBar from "../../Components/SearchBar";
 import Api from "../../Services/Api";
 
 export default class ClientLogin extends Component {
@@ -71,7 +70,6 @@ export default class ClientLogin extends Component {
 					padding: " 4rem"
 				}}
 			>
-				<SearchBar />
 				<h2 style={{ textAlign: "center" }}>Sign In</h2>
 				<Form className="form">
 					<Col>
@@ -98,13 +96,15 @@ export default class ClientLogin extends Component {
 							/>
 						</FormGroup>
 					</Col>
-					<Button sm={{ size: 8, offset: 4 }} onClick={this.clientLogin}>
-						Submit
-					</Button>
+					<div>
+						<Button sm={{ size: 8, offset: 4 }} onClick={this.clientLogin}>
+							Submit
+						</Button>
 
-					<Link className="" to="/inscription">
-						Créer un compte
-					</Link>
+						<Link className="" to="/inscription">
+							Créer un compte
+						</Link>
+					</div>
 				</Form>
 			</Container>
 		);

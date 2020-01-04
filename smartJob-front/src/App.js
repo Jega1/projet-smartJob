@@ -7,8 +7,8 @@ import "./static/css/produitDetaille.css";
 import "./static/css/carousel.css";
 
 import Nav from "./Components/Nav";
-import Navbar from "./Components/Nav-bar";
-import Header from "./Components/Header";
+// import Navbar from "./Components/Nav-bar";
+// import Header from "./Components/Header";
 
 import Home from "./Screens/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

@@ -276,7 +276,7 @@ export default class EnterpriseDashboard extends Component {
 					</ModalBody>
 					<ModalFooter>
 						<Button color="primary" onClick={this.publierAnnonce}>
-							Publier l'annonce
+							Ajouter 
 						</Button>{" "}
 						<Button color="secondary" onClick={this.toggleModal}>
 							Cancel
